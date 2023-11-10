@@ -7,9 +7,10 @@
 }
 
 * {
-  background-color: #242121;
+  /* background-color: #242121; */
   box-sizing: border-box;
-  margin: 0;
+  margin-right: 0;
+
   padding: 0;
 }
 

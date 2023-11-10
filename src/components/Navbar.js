@@ -11,7 +11,7 @@ const Navbar = () => {
   // ajout
 
   return (
-    <div className="bg-letter-orange">
+    <div className="bg-black-body">
       <div className="relative px-2  flex justify-between items-center border-b border-border-black-button">
         <a className=" font-bold leading-none" href="#">
           <span className="text-letter-orange">logo</span>
