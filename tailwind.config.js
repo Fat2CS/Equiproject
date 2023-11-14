@@ -3,8 +3,12 @@ module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}"
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    
+
   ],
+
+ 
   theme: {
     fontSize: {
       sm: ["14px", "20px"],
@@ -35,6 +39,7 @@ module.exports = {
         "letter-orange": "#A66B37",
         "button-color": "#A66B37",
         "card-title":"#9D9292",
+        "input-bg": "#1D1A1A"
       }
     }
   },
