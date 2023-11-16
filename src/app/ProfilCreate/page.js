@@ -4,86 +4,102 @@ import React, { useState } from "react";
 import { db } from "../../firebase";
 import { collection, addDoc } from "firebase/firestore";
 
+import { useRouter } from "next/navigation";
+
 async function addDataToFireStore(
+
+  router,
   name,
   username,
   business,
   phone,
   approved,
-  email,
   role,
   annonces,
   adress,
-  postalCode
+  postal,
+  userId
 ) {
+
+
+
+  
+  if (!userId) {
+    console.error("UserId is undefined");
+    return false;}
+
+
   try {
-    
 
-    const docRef = await addDoc(
-      collection(db, "Employeur"),
+    console.log("Attempting to add data:", name, username, business, phone, approved, role, annonces, adress, postal, router, userId);
+    const collectionRef = collection(db, "User", userId);
+    console.log("Collection Reference:", collectionRef);
 
-      {
-        name: name,
-        username: username,
-        email: email,
-        business: business,
-        phone: phone,
-        approved: true,
-        role: "user",
-        annonces: annonces || "",
-        adress: adress || "",
-        // adress: adress ,
-        ...(postalCode && { postalCode })
-        // PostalCode: PostalCode || ""
-      }
-    );
-
+    // const docRef = await addDoc(
+    //   collection(db, "User", userId),
+    const docRef = await addDoc(collectionRef, {
+      name: name,
+      username: username,
+      business: business,
+      phone: phone,
+      approved: true,
+      role: "user",
+      annonces: "",
+      adress: adress || "",
+      postal: postal || ""
+      // adress: adress ,
+      // ...(postal && { postal })
+    });
+    router.push(`/ProfilPro?id=${userId}`);
     console.log("document ecrit pour cette id :", docRef.id);
     return true;
   } catch (error) {
     console.error("error pour l'ajout", error);
     return false;
   }
-
 }
 
-function ProfilCreate() {
+function ProfilCreate({ userId }) {
+  const router = useRouter();
+
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [business, setBusiness] = useState("");
   const [phone, setPhone] = useState("");
   const [annonces, setAnnonces] = useState("");
-  const [email, setEmail] = useState("");
+
   const [adress, setAdress] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  
-  // console.log("adresse:", adress, postalCode, name);
+  const [postal, setPostal] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    
+
     const added = await addDataToFireStore(
+      router,
       name,
       username,
       business,
       phone,
-      email,
-      annonces,
+      true, // Assurez-vous que 'approved' est correct ici
+      "user", // Assurez-vous que 'role' est correct ici
+      "", // Assurez-vous que 'annonces' est correct ici
       adress,
-      postalCode
+      postal,
+      userId
+      
     );
-    console.log("adresse:", adress, postalCode, name);
+
     if (added) {
       setName("");
       setUsername("");
       setBusiness("");
-      setEmail("");
       setPhone("");
       setAdress("");
-      setPostalCode("");
+      setPostal("");
       alert("votre profil vient d'être crée ");
     }
-
-    console.log("adresse:", adress, postalCode, name);
   };
   return (
     <div className="flex  min-h-full flex-1 flex-col  px-3 py-12 lg:px-2 ">
@@ -179,28 +195,6 @@ function ProfilCreate() {
                 />
               </div>
             </div>
-
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium leading-6 text-letter-grey mx-3"
-              >
-                Email
-              </label>
-              <div className="mt-2 mx-2">
-                <input
-                  id="email"
-                  placeholder="contact@ecurieblue.com"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="  block w-full rounded-full border-0 py-3.5 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button  placeholder-gray-600 "
-                />
-              </div>
-            </div>
           </div>
 
           <div className="flex">
@@ -236,13 +230,13 @@ function ProfilCreate() {
               <div className="mt-2 mx-2">
                 <input
                   placeholder="83550 "
-                  id="postalCode"
-                  name="postalCode"
-                  type="text"
-                  autoComplete="postalCode"
+                  id="postal"
+                  name="postal"
+                  type="number"
+                  autoComplete="postal"
                   required
-                  value={postalCode}
-                  onChange={(e) => setPostalCode(e.target.value)}
+                  value={postal}
+                  onChange={(e) => setPostal(e.target.value)}
                   className="  block w-full rounded-full border-0 py-3.5 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-gray-600 "
                 />
               </div>

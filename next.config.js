@@ -5,27 +5,41 @@
 // const apiSecret = process.env.CLOUDINARY_API_SECRET;
 
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/profilCreate/:id",
+        destination: "/ProfilCreate?id=:id",
+        permanent: true
+      },
+      {
+        source: "/profilPro/:id",
+        destination: "/ProfilPro?id=:id",
+        permanent: true
+      },
+
+    ];
+  },
   reactStrictMode: true,
   webpack: (config, { webpack }) => {
     config.module.rules.push({
       test: /\.svg$/,
       use: [
         {
-          loader: '@svgr/webpack',
+          loader: "@svgr/webpack",
           options: {
             svgoConfig: {
-              plugins: [{
-                "name": "removeViewBox",
-                "active": false
-              },
-              { "name": "removeDimensions",
-              "active": true
-              }
-            ]
-            },
-          },
-        },
-      ],
+              plugins: [
+                {
+                  name: "removeViewBox",
+                  active: false
+                },
+                { name: "removeDimensions", active: true }
+              ]
+            }
+          }
+        }
+      ]
     });
 
     return config; // Ajoutez cette ligne pour retourner la configuration modifiée
@@ -35,14 +49,14 @@ const nextConfig = {
     remotePatterns: [
       // Vous devez fournir des objets plutôt que des chaînes de caractères
       {
-          hostname: "www.w3.org",
+        hostname: "www.w3.org"
         // D'autres options ici si nécessaire
       },
       {
-        hostname: "res.cloudinary.com",
+        hostname: "res.cloudinary.com"
         // D'autres options ici si nécessaire
-      },
-    ],
+      }
+    ]
   }
 };
 
