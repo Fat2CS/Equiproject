@@ -51,7 +51,7 @@ const Hero = () => {
             </button>
           </div>
           <div>
-            <Link href={"/Login"}>
+            <Link href={"/pages/SignIn"}>
               <button class="bg-black-button bg-opacity-80 text-letter-grey border hover:bg-letter-grey  font-bold py-2 px-4 rounded-full">
                 Me connecter
               </button>

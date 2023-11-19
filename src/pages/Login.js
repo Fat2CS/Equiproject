@@ -3,7 +3,7 @@
 import React from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRef } from "react";
-import { auth } from "../../firebase";
+import { auth } from "../firebase";
 import Image from "next/image";
 function Login() {
   const lEmailRef = useRef();

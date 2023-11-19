@@ -1,13 +1,14 @@
 "use client";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
+import NextLink from "next/link";
 import { addDoc, collection } from "firebase/firestore";
 
 // import {useNavigation} from 'next/navigation';
 // import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useRef } from "react";
-import { auth, db } from "../../firebase";
+import { auth, db } from "../firebase";
 
 export default function SignIn() {
   const router = useRouter();
@@ -45,37 +46,14 @@ export default function SignIn() {
       });
 
       console.log("Document utilisateur créé avec succès.");
-      router.push(`/ProfilCreate?id=${userId}`);
+      router.push(`./ProfilCreate/${userId}`);
+      // router.push(`./ProfilCreate/?id=${userId}`);
+      // <NextLink href={`./user/${userID}`}/>
     } catch (error) {
       // Gérer les erreurs d'inscription
       console.error("Error during signup:", error.message);
     }
   };
-
-  // const router = useRouter();
-  // export default function Signin() {
-
-  // const emailRef = useRef();
-  // const passwordRef = useRef();
-
-  // const SignIn = (e)=> {
-  // e.preventDefault();
-  // const email = emailRef.current.value;
-  // const password = passwordRef.current.value
-  // createUserWithEmailAndPassword(auth, email, password)
-  //   .then((userCredential) => {
-  //     // Signed up
-  //     const user = userCredential.user;
-  //     alert("vous êtes connecté");
-  //     // ...
-  //   })
-  //   .catch((error) => {
-  //     const errorCode = error.code;
-  //     const errorMessage = error.message;
-  //     alert(errorMessage);
-  //     // ..
-  //   });
-  // }
 
   return (
     <div className="flex min-h-full flex-1 flex-col  px-6 py-12 lg:px-2 lg:flex-row">

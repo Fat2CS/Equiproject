@@ -39,7 +39,9 @@ module.exports = {
         "letter-orange": "#A66B37",
         "button-color": "#A66B37",
         "card-title":"#9D9292",
-        "input-bg": "#1D1A1A"
+        "input-bg": "#1D1A1A",
+        "red": "#D80032",
+        "green": "#70e000",
       }
     }
   },

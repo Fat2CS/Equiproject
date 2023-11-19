@@ -6,63 +6,20 @@ import { collection, addDoc } from "firebase/firestore";
 
 import { useRouter } from "next/navigation";
 
-async function addDataToFireStore(
+// export async function getServerSideProps(context) {
+//   const { id } = context.params;
+//   console.log("id", id);
+//   return {
+//     props: {
+//       userId : id
+//     }
+//   };
+// }
 
-  router,
-  name,
-  username,
-  business,
-  phone,
-  approved,
-  role,
-  annonces,
-  adress,
-  postal,
-  userId
-) {
-
-
-
-  
-  if (!userId) {
-    console.error("UserId is undefined");
-    return false;}
-
-
-  try {
-
-    console.log("Attempting to add data:", name, username, business, phone, approved, role, annonces, adress, postal, router, userId);
-    const collectionRef = collection(db, "User", userId);
-    console.log("Collection Reference:", collectionRef);
-
-    // const docRef = await addDoc(
-    //   collection(db, "User", userId),
-    const docRef = await addDoc(collectionRef, {
-      name: name,
-      username: username,
-      business: business,
-      phone: phone,
-      approved: true,
-      role: "user",
-      annonces: "",
-      adress: adress || "",
-      postal: postal || ""
-      // adress: adress ,
-      // ...(postal && { postal })
-    });
-    router.push(`/ProfilPro?id=${userId}`);
-    console.log("document ecrit pour cette id :", docRef.id);
-    return true;
-  } catch (error) {
-    console.error("error pour l'ajout", error);
-    return false;
-  }
-}
-
-function ProfilCreate({ userId }) {
+function ProfilCreate() {
   const router = useRouter();
-
   const [name, setName] = useState("");
+
   const [username, setUsername] = useState("");
   const [business, setBusiness] = useState("");
   const [phone, setPhone] = useState("");
@@ -73,11 +30,9 @@ function ProfilCreate({ userId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    
+    // const userId = router && router.query ? router.query.userId : null;
 
     const added = await addDataToFireStore(
-      router,
       name,
       username,
       business,
@@ -86,9 +41,7 @@ function ProfilCreate({ userId }) {
       "user", // Assurez-vous que 'role' est correct ici
       "", // Assurez-vous que 'annonces' est correct ici
       adress,
-      postal,
-      userId
-      
+      postal
     );
 
     if (added) {
@@ -98,9 +51,63 @@ function ProfilCreate({ userId }) {
       setPhone("");
       setAdress("");
       setPostal("");
+
       alert("votre profil vient d'être crée ");
     }
   };
+
+  async function addDataToFireStore(
+    name,
+    username,
+    business,
+    phone,
+    approved,
+    role,
+    annonces,
+    adress,
+    postal
+  ) {
+    try {
+      console.log(
+        "Attempting to add data:",
+        name,
+        username,
+        business,
+        phone,
+        approved,
+        role,
+        annonces,
+        adress,
+        postal
+      );
+      const collectionRef = collection(db, "User");
+      console.log("Collection Reference:", collectionRef);
+
+      // const docRef = await addDoc(
+      //   collection(db, "User", userId),
+      const docRef = await addDoc(collectionRef, {
+        name: name,
+        username: username,
+        business: business,
+        phone: phone,
+        approved: true,
+        role: "user",
+        annonces: "",
+        adress: adress || "",
+        postal: postal || ""
+        // adress: adress ,
+        // ...(postal && { postal })
+      });
+
+      console.log("document ecrit pour cette id :", docRef.id);
+      router.push(`/ProfilPro/${docRef.id}`);
+      return true;
+    } catch (error) {
+      console.error("error pour l'ajout", error);
+      return false;
+    }
+  }
+
   return (
     <div className="flex  min-h-full flex-1 flex-col  px-3 py-12 lg:px-2 ">
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm lg:max-w-lg ">
