@@ -4,11 +4,17 @@ import React, { useState } from "react";
 import { db } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
 
-import { useRouter } from "next/navigation";
-import { userAgent } from "next/server";
+import { useRouter } from "next/router";
+
 
 function AnnoncesCreate() {
   const router = useRouter();
+
+
+
+
+
+
   const [catégories, setCatégories] = useState("");
   const [métiers, setMétiers] = useState("");
   const [experience, setExperience] = useState("");
@@ -18,6 +24,8 @@ function AnnoncesCreate() {
   const [userId, setUserId] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
 
+
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -40,6 +48,7 @@ function AnnoncesCreate() {
       setUserId("");
 
       alert("création de l'annonce réussie");
+      router.push(`/Validation/${userId}`);
     }
   };
 
@@ -76,7 +85,7 @@ function AnnoncesCreate() {
       });
 
       console.log("Document reference:", docRef.id);
-      // router.push("/Annonces");
+      router.push(`/Validation/${userId}`);
       return true;
     } catch (error) {
       console.error("Error adding data", error);
@@ -139,9 +148,9 @@ function AnnoncesCreate() {
     <>
      
       <div className="flex ">
-        <div className="lg:block hidden ">
+        {/* <div className="lg:block hidden ">
           <Pronavbar className="m-0 p-0" />
-        </div>
+        </div> */}
 
         <div className="sm:m-8 px-2 sm:w-full md:w-1/2 md:px-2 md:mt-20 md:pt-4 md: ">
           <div className="text-letter-grey  mt-10 text-lg lg:mt-6 md:ml-20 md:pl-7 mb-15">

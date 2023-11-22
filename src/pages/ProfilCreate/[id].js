@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { db } from "../../firebase";
 import { collection, addDoc } from "firebase/firestore";
 
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 // export async function getServerSideProps(context) {
 //   const { id } = context.params;
@@ -27,8 +27,10 @@ function ProfilCreate() {
 
   const [adress, setAdress] = useState("");
   const [postal, setPostal] = useState("");
+  
 
   const handleSubmit = async (e) => {
+    
     e.preventDefault();
     // const userId = router && router.query ? router.query.userId : null;
 
@@ -41,7 +43,8 @@ function ProfilCreate() {
       "user", // Assurez-vous que 'role' est correct ici
       "", // Assurez-vous que 'annonces' est correct ici
       adress,
-      postal
+      postal,
+      
     );
 
     if (added) {

@@ -8,12 +8,12 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: "/profilCreate/:id",
+        source: "/ProfilCreate/:id",
         destination: "/ProfilCreate?id=:id",
         permanent: true
       },
       {
-        source: "/profilPro/:id",
+        source: "/ProfilPro/:id",
         destination: "/ProfilPro?id=:id",
         permanent: true
       },

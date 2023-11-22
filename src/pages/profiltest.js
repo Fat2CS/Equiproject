@@ -213,7 +213,7 @@ const ProfilPro = () => {
 
           {/* Quatrième conteneur - Tableau des transactions */}
           <div className="mt-8 border border-border-black-button bg-black-button p-4 shadow rounded-lg">
-            {/* ... */}
+        
           </div>
         </div>
       </div>
