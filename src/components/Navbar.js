@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -14,7 +15,15 @@ const Navbar = () => {
     <div className="bg-black-body">
       <div className="relative px-2  flex justify-between items-center border-b border-border-black-button">
         <a className=" font-bold leading-none" href="#">
-          <span className="text-letter-orange">logo</span>
+        
+          <Image
+        width={60}
+        height={60}
+        sizes="100vw"
+        src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1699864920/EQUINTERIM/cwjhu4bqsn2mkvnswwqy.png"
+        alt="cavalière"
+      />
+
           {/* <svg className="h-10 " alt="logo" viewBox="0 0 10240 10240">
           
           </svg> */}

@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
 import Image from "next/image";
-import Insta from "public/image/instagram.svg"; 
+import Insta from "public/image/instagram.svg";
 const Footer = () => {
   return (
     <footer className=" ">
       <hr className="my-6 sm:mx-auto border-letter-grey border lg:my-8" />
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8 lg:mr-2 lg:mt-20">
         <div className="md:flex md:justify-between">
-          <div className="mb-6 md:mb-0">
-            <a href="https://flowbite.com/" className="flex items-center">
+          <div className="mb-8 md:mb-0 md: ">
+            <a href="https://" className="flex items-center">
               <Image
-                src="https://flowbite.com/docs/images/logo.svg"
-                alt="FlowBite Logo"
-                className="h-8 mr-3"
-                width={32}
-                height={32}
+                src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1699864920/EQUINTERIM/cwjhu4bqsn2mkvnswwqy.png"
+                alt="equiterim Logo"
+                className=" mr-3"
+                width={80}
+                height={80}
               />
               <span className="self-center text-2xl font-semibold whitespace-nowrap text-letter-orange">
-                EQUIINERIM
+                EQUITERIM
               </span>
             </a>
             <div className="text-center py-5 text-letter-grey">
@@ -32,25 +32,25 @@ const Footer = () => {
                 className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
               >
                 <div>
-
-                    <Insta className="w-35 h-55 bg-letter-orange"/>
+                  <Insta className="w-35 h-55 bg-letter-orange" />
                 </div>
-              
-             <Image src={Insta} alt="" style="color:black" width={23} height={1} />
-                
 
-             <span className="sr-only">Instagram page</span>
-           
+                <Image
+                  src={Insta}
+                  alt=""
+                  style="color:black"
+                  width={23}
+                  height={1}
+                />
+
+                <span className="sr-only">Instagram page</span>
               </a>
 
               <a
                 href="#"
                 className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
               >
-
-
                 <svg
-                
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -86,7 +86,7 @@ const Footer = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-8 sm:gap-6 lg:grid-cols-3 ">
-            <div className="lg:mx-20 px-5" >
+            <div className="lg:mx-20 px-5">
               <h2 className="mb-6 text-sm font-semibold text-letter-orange uppercase">
                 Resources
               </h2>
@@ -148,7 +148,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
             © 2023

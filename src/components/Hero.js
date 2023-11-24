@@ -4,6 +4,8 @@ import Image from "next/image";
 import React from "react";
 import Footer from "./Footer";
 import Link from "next/link";
+import { AiTwotoneCheckCircle } from "react-icons/ai";
+import { AiTwotoneEuroCircle } from "react-icons/ai";
 
 const Hero = () => {
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
@@ -20,7 +22,7 @@ const Hero = () => {
       <div className=" px-2 textHero md:absolute top-11 md:px-0 mt-8 text-center md:text-start">
         <div className="text-letter-grey font-bold ">
           <h1 className=" border border-button-color rounded-xl ml-2 text-oxl sm:mt-0  md:text-4xl lg:text-xl py-2 mt-9 md:border-none ">
-            EQUITERIM
+            EQUINTERIM
           </h1>
         </div>
         <div>
@@ -115,12 +117,14 @@ const Hero = () => {
         </div>
 
         <div className="text-letter-grey text-sm py-2 px-2 mt-2  md:text-base sm:text-justify  lg:mb-20 lg:py-9">
-          <div className="cercleWithText mt-10 lg:flex">
+          <div className="cercleWithText mt-10 lg:mt-14 lg:pt-5 lg:flex">
             <div className="mt-3 ml-35vw mb-3 lg:ml-0 mr-3  lg:py-9">
-              <div className="w-20 h-20 bg-letter-orange rounded-full "></div>
+              <div className="w-20 h-20 bg-letter-orange rounded-full ">
+                <AiTwotoneCheckCircle className="text-letter-grey w-20 h-20 text-center" />
+              </div>
             </div>
 
-            <div className="pr-5 mt-5 lg:pr-0 lg:text-base">
+            <div className="pr-5 mt-5  lg:pt-5 lg:pr-0 lg:text-base">
               <span>
                 Nos profils sont validés avec soin, garantissant ainsi que seuls
                 les meilleurs professionnels vous sont proposés. <br />
@@ -133,7 +137,9 @@ const Hero = () => {
 
           <div className="cercleWithText mt-10 lg:flex ">
             <div className="mt-3 ml-35vw mb-3 md:ml-0 lg:ml-0 mr-3  lg:py-9">
-              <div className="w-20 h-20 bg-letter-orange rounded-full "></div>
+              <div className="w-20 h-20 bg-letter-orange rounded-full ">
+                <AiTwotoneEuroCircle className="text-letter-grey w-20 h-20 text-center" />
+              </div>
             </div>
 
             <div className="pr-5 mt-5">
