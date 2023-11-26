@@ -48,12 +48,13 @@ const Hero = () => {
         </div>
         <div className=" ml-3 signButton mt-6 flex space-x-10  ">
           <div>
+            <Link href={"/SignIn"}>
             <button class="bg-letter-orange bg-opacity-80 text-letter-grey border  hover:bg-letter-grey hover:text-black-body font-bold py-2 px-4 rounded-full">
               Créer mon compte
-            </button>
+            </button></Link>
           </div>
           <div>
-            <Link href={"/pages/SignIn"}>
+            <Link href={"/Login"}>
               <button class="bg-black-button bg-opacity-80 text-letter-grey border hover:bg-letter-grey  font-bold py-2 px-4 rounded-full">
                 Me connecter
               </button>
@@ -169,9 +170,12 @@ const Hero = () => {
               dans leur domaine et poster un annonce gratuitement !
             </span>
             <div className="text-center ">
+              <Link href={"/SignIn"}>
               <button class="bg-letter-orange  text-letter-grey border hover:bg-letter-grey hover:text-black-body font-bold py-4 px-4 rounded-full mt-9 ">
                 Je crée mon compte
               </button>
+              </Link>
+              
             </div>
           </div>
 
@@ -181,15 +185,17 @@ const Hero = () => {
               disponibilités, et accédez à l’ensemble de nos offres ! 
             </span>
             <div className="text-center">
+
+              <Link href={"/Login"}>
               <button class="bg-letter-orange  text-letter-grey border  hover:bg-letter-grey hover:text-black-body font-bold py-4 px-7 rounded-full mt-9 ">
                 Je m'inscris
               </button>
+              </Link>
+              
             </div>
           </div>
 
-          <div></div>
-          <div></div>
-          <div></div>
+       
         </div>
       </section>
 
@@ -222,7 +228,7 @@ const Hero = () => {
               width={200}
               height={200}
               sizes="(max-width: 640px) 100vw, (max-width: 868px) 50vw, 60vw"
-              src="https://res.cloudinary.com/dgkp7pkly/image/upload/c_crop,g_auto,h_800,w_800/EQUINTERIM/t011geg2exfmcuddre10.jpg"
+              src="https://res.cloudinary.com/dgkp7pkly/image/upload/c_crop,g_auto,h_800,w_800/EQUINTERIM/gqkny3ao2kkdvwkflsta.jpg"
               alt="cavalier"
             />
 
@@ -239,7 +245,7 @@ const Hero = () => {
               width={200}
               height={200}
               sizes="(max-width: 640px) 100vw, (max-width: 868px) 50vw, 60vw"
-              src="https://res.cloudinary.com/dgkp7pkly/image/upload/c_crop,g_auto,h_800,w_800/EQUINTERIM/t011geg2exfmcuddre10.jpg"
+              src="https://res.cloudinary.com/dgkp7pkly/image/upload/c_crop,g_auto,h_800,w_800/EQUINTERIM/q91aslupbfjhajba5tmu.jpg"
               alt="cavalier"
             />
 
@@ -253,7 +259,7 @@ const Hero = () => {
               width={200}
               height={200}
               sizes="(max-width: 640px) 100vw, (max-width: 768px) 80vw, 60vw"
-              src="https://res.cloudinary.com/dgkp7pkly/image/upload/c_crop,g_auto,h_800,w_800/EQUINTERIM/t011geg2exfmcuddre10.jpg"
+              src="https://res.cloudinary.com/dgkp7pkly/image/upload/c_crop,g_auto,h_800,w_800/EQUINTERIM/f1pt5zoy0tu2t8hxwlyj.jpg"
               alt="cavalier"
             />
 

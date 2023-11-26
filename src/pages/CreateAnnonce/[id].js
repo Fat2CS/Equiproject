@@ -11,10 +11,6 @@ function AnnoncesCreate() {
   const router = useRouter();
 
 
-
-
-
-
   const [catégories, setCatégories] = useState("");
   const [métiers, setMétiers] = useState("");
   const [experience, setExperience] = useState("");
@@ -24,8 +20,6 @@ function AnnoncesCreate() {
   const [userId, setUserId] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
 
-
- 
   const handleSubmit = async (e) => {
     e.preventDefault();
 

@@ -5,6 +5,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRef } from "react";
 import { auth } from "../firebase";
 import Image from "next/image";
+import Link from "next/link";
 function Login() {
   const lEmailRef = useRef();
   const lPasswordRef = useRef();
@@ -33,13 +34,17 @@ function Login() {
     <div className="flex min-h-full flex-1 flex-col  px-6 py-12 lg:px-2 lg:flex-row">
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
         <div className=" mx-auto text-center w-1/2 lg:mx-0 lg:mr-8 lg:relative lg:right-8 ">
+
+          <Link href={"/"}>
           <Image
-            width={217}
-            height={217}
+            width={100}
+            height={100}
             sizes="20vw"
-            src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1699865791/EQUINTERIM/eliunvkjpis02zzppvwo.png"
+            src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1700827173/EQUINTERIM/bvofggf7jwc5wptxilbn.png"
             alt="Your Company"
           />
+          </Link>
+          
         </div>
         <form onSubmit={Login} className="space-y-6 lg:ml-4">
           <div>
@@ -107,13 +112,14 @@ function Login() {
         ;
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <div className="mx-auto text-center w-1/2">
+      <div className="mt-10 lg:py-20 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mx-auto text-center w-full">
           <Image
-            width={217}
-            height={217}
+          className="rounded-full object-cover"
+            width={617}
+            height={617}
             sizes="20vw"
-            src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1699865791/EQUINTERIM/eliunvkjpis02zzppvwo.png"
+            src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1700833526/EQUINTERIM/f1pt5zoy0tu2t8hxwlyj.png"
             alt="Your Company"
           />
         </div>
