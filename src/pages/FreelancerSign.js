@@ -11,12 +11,15 @@ import Image from "next/image";
 import { useRef } from "react";
 import { auth, db } from "../firebase";
 
-export default function SignIn() {
+export default function FreelancerSign() {
   const router = useRouter();
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  const type = "Professionnel";
+  const type = "Freelancer";
+  const nameRef = useRef();
+  const usernameRef = useRef();
+  const phoneRef = useRef();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -24,6 +27,9 @@ export default function SignIn() {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     const confirmPassword = confirmPasswordRef.current.value;
+    const name = nameRef.current.value;
+    const username = usernameRef.current.value;
+    const phone = phoneRef.current.value;
 
     if (password !== confirmPassword) {
       alert("Les mots de passe ne correspondent pas.");
@@ -34,22 +40,27 @@ export default function SignIn() {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
+        name,
+        username,
+        phone
       );
       const userId = userCredential.user.uid;
       console.log("Compte créé avec succès. ID de l'utilisateur:", userId);
       // Créer un document pour l'utilisateur dans Firestore avec les propriétés initiales
-      await addDoc(collection(db, "User"), {
+      await addDoc(collection(db, "Freelancer"), {
         userId: userId,
         email: email,
-        type: type
+        type: type,
+        name: name,
+        username: username,
+        phone: phone
+
         // ... Autres propriétés initiales ...
       });
 
       console.log("Document utilisateur créé avec succès.");
-      router.push(`./ProfilCreate/${userId}`);
-      // router.push(`./ProfilCreate/?id=${userId}`);
-      // <NextLink href={`./user/${userID}`}/>
+      router.push("./FreelancerProfil");
     } catch (error) {
       // Gérer les erreurs d'inscription
       console.error("Error during signup:", error.message);
@@ -57,8 +68,8 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex min-h-full flex-1 flex-col  px-6 py-8 lg:px-20 lg:m-0 lg:flex-row ">
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
+    <div className="flex min-h-full flex-1 flex-col  px-6 py-5 lg:overflow-y-hidden lg:py-0 lg:px-20 lg:m-0 lg:flex-row ">
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm lg:w-2.5/3  ">
         <div className=" mx-auto text-center w-1/2 lg:mx-0 lg:mr-8 lg:relative lg:right-8 ">
           <Link href={"/"}>
             <Image
@@ -82,21 +93,78 @@ export default function SignIn() {
                   Renseignez
                 </div>
                 <div className=" squareblack bg-black-button bg-opacity-80 font-bold text-letter-grey rounded-e-2xl px-2 text-sm md:text-lg md:pr-20 py-2 ">
-                  vos informations
+                  vos informations de compte prestataire
                 </div>
               </div>
               <div className="flex ml-2 ">
                 <div className="squareorange bg-letter-orange text-letter-grey font-bold text-sm px-1 md:text-lg md:w-18 py-2  ">
-                  Faites
+                  Trouvez
                 </div>
                 <div className=" squareblack bg-black-button bg-opacity-80 font-bold text-letter-grey rounded-e-2xl px-2 text-sm md:text-lg md:pr-20 py-2 ">
-                  galoper vos opportunités professionnelles
+                  vite la mission idéale!
                 </div>
               </div>
             </div>
           </div>
         </div>
         <form onSubmit={handleSignIn} className="space-y-6 lg:ml-4 mt-5">
+          <div className=" mt-8 flex">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium leading-6 text-letter-grey"
+            >
+              Nom
+            </label>
+            <div className="mt-2">
+              <input
+                id="name"
+                name="name"
+                type="name"
+                autoComplete="name"
+                required
+                ref={nameRef}
+                className=" block w-full rounded-full border  py-3.5 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button "
+              />
+            </div>
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium leading-6 text-letter-grey"
+            >
+              Prénom
+            </label>
+            <div className="mt-2">
+              <input
+                id="username"
+                name="username"
+                type="username"
+                autoComplete="username"
+                required
+                ref={usernameRef}
+                className=" block w-full rounded-full border  py-3.5 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button "
+              />
+            </div>
+          </div>
+
+          <div>
+            <label
+              htmlFor="phone"
+              className="block text-sm font-medium leading-6 text-letter-grey"
+            >
+              Téléphone
+            </label>
+            <div className="mt-2">
+              <input
+                id="phone"
+                name="phone"
+                type="phone"
+                autoComplete="phone"
+                required
+                ref={phoneRef}
+                className=" block w-full rounded-full border  py-3.5 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button "
+              />
+            </div>
+          </div>
+
           <div>
             <label
               htmlFor="email"
