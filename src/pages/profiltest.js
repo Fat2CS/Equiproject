@@ -17,6 +17,7 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import Link from "next/link";
 
 const ProfilPro = () => {
+  const [approuved, setApprouved] = useState(false);
   const userData = {
     improved: false
   };
@@ -32,28 +33,31 @@ const ProfilPro = () => {
         {/* ... */}
 
         <nav className="flex items-center space-x-16 justify-around m-auto">
-            <Link href="/ProfilPro">
-          <div className="items-center space-x-4 text-letter-grey">
-            <PiEnvelopeThin className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-          </div> </Link>
           <Link href="/ProfilPro">
-          <div className=" items-center space-x-4 text-letter-grey">
-            <FaMagnifyingGlass className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-          </div>
+            <div className="items-center space-x-4 text-letter-grey">
+              <PiEnvelopeThin className="text-letter-orange mt-1 mr-2 w-5 h-5" />
+            </div>{" "}
           </Link>
-            <Link href="/ProfilPro">
-          <div className=" items-center space-x-4 text-letter-grey">
-            <PiNewspaperClippingLight className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-          </div> </Link>
           <Link href="/ProfilPro">
-
-          <div className=" items-center space-x-4 text-letter-grey">
-            <BsPersonWorkspace className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-          </div>    </Link>
+            <div className=" items-center space-x-4 text-letter-grey">
+              <FaMagnifyingGlass className="text-letter-orange mt-1 mr-2 w-5 h-5" />
+            </div>
+          </Link>
           <Link href="/ProfilPro">
-          <div className=" items-center space-x-4 text-letter-grey">
-            <RiLogoutCircleRLine className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-          </div></Link>
+            <div className=" items-center space-x-4 text-letter-grey">
+              <PiNewspaperClippingLight className="text-letter-orange mt-1 mr-2 w-5 h-5" />
+            </div>{" "}
+          </Link>
+          <Link href="/ProfilPro">
+            <div className=" items-center space-x-4 text-letter-grey">
+              <BsPersonWorkspace className="text-letter-orange mt-1 mr-2 w-5 h-5" />
+            </div>{" "}
+          </Link>
+          <Link href="/ProfilPro">
+            <div className=" items-center space-x-4 text-letter-grey">
+              <RiLogoutCircleRLine className="text-letter-orange mt-1 mr-2 w-5 h-5" />
+            </div>
+          </Link>
         </nav>
       </div>
 
@@ -65,70 +69,77 @@ const ProfilPro = () => {
           id="sideNav"
         >
           <nav>
+            <Link href="/ProfilPro">
+              <div className="flex ml-2 mt-9">
+                <div>
+                  <PiEnvelopeThin className="text-letter-orange mt-1 mr-2 w-5 h-5" />
+                </div>
+                <div>
+                  <ul className="flex items-center space-x-4 text-letter-grey">
+                    {" "}
+                    Message{" "}
+                  </ul>
+                </div>
+              </div>{" "}
+            </Link>
 
-          <Link href="/ProfilPro">
-            <div className="flex ml-2 mt-9">
-              <div>
-                <PiEnvelopeThin className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-              </div>
-              <div>
-                <ul className="flex items-center space-x-4 text-letter-grey">
-                  {" "}
-                  Message{" "}
-                </ul>
-              </div>
-            </div> </Link>
+            <Link href="/BeforeAnnonce">
+              <div className="flex ml-2 mt-9">
+                <div>
+                  <BsPersonWorkspace className="text-letter-orange mt-1 mr-2" />
+                </div>
+                <div>
+                  <ul className="flex items-center space-x-4 text-letter-grey">
+                    Déposer une annonce{" "}
+                  </ul>
+                </div>
+              </div>{" "}
+            </Link>
+
+
             <Link href={"/ProfilPro"}>
-            <div className="flex ml-2 mt-9">
-              <div>
-                <FaMagnifyingGlass className="text-letter-orange mt-1 mr-2" />
-              </div>
-              <div>
-                <ul className="flex items-center space-x-4 text-letter-grey">
-                  {" "}
-                  Trouver un prestataire{" "}
-                </ul>
-              </div>
-            </div> </Link>
+              <div className="flex ml-2 mt-9">
+                <div>
+                  <FaMagnifyingGlass className="text-letter-orange mt-1 mr-2" />
+                </div>
+                <div>
+                  <ul className="flex items-center space-x-4 text-letter-grey">
+                    {" "}
+                    Trouver un prestataire{" "}
+                  </ul>
+                </div>
+              </div>{" "}
+            </Link>
 
             <Link href="/ProfilPro">
-            <div className="flex ml-2 mt-9">
-              <div>
-                <PiNewspaperClippingLight className="text-letter-orange mt-1 mr-2" />
-              </div>
-              <div>
-                <ul className="flex items-center space-x-4 text-letter-grey">
-                  {" "}
-                  Suivre les candidatures{" "}
-                </ul>
-              </div>
-            </div> </Link>
+              <div className="flex ml-2 mt-9">
+                <div>
+                  <PiNewspaperClippingLight className="text-letter-orange mt-1 mr-2" />
+                </div>
+                <div>
+                  <ul className="flex items-center space-x-4 text-letter-grey">
+                    {" "}
+                    Suivre les candidatures{" "}
+                  </ul>
+                </div>
+              </div>{" "}
+            </Link>
+           
             <Link href="/ProfilPro">
-            <div className="flex ml-2 mt-9">
-              <div>
-                <BsPersonWorkspace className="text-letter-orange mt-1 mr-2" />
-              </div>
-              <div>
-                <ul className="flex items-center space-x-4 text-letter-grey">
-                  Déposer une annonce{" "}
-                </ul>
-              </div>
-            </div> </Link>
-            <Link href="/ProfilPro">
-            <div className="flex ml-2 my-10">
-              <div>
-                <RiLogoutCircleRLine className="text-letter-orange mt-1 mr-2" />
-              </div>
+              <div className="flex ml-2 my-10">
+                <div>
+                  <RiLogoutCircleRLine className="text-letter-orange mt-1 mr-2" />
+                </div>
 
-              <div>
-                <ul className="flex items-center space-x-4 text-letter-grey">
-                  {" "}
-                  Déconnecter{" "}
-                </ul>
-              </div>
-            </div> </Link>
+                <div>
+                  <ul className="flex items-center space-x-4 text-letter-grey">
+                    {" "}
+                    Déconnecter{" "}
+                  </ul>
+                </div>
+              </div>{" "}
+            </Link>
           </nav>
-       
         </div>
 
         {/* Zone de contenu principal */}
@@ -139,6 +150,22 @@ const ProfilPro = () => {
 
             <div className="text-letter-grey text-center text-lg mt-4">
               <h1>userData.name</h1>
+
+              <div className=" mr-8 flex justify-center">
+                {approuved ? (
+                  <div className=" mt-3 w-5 h-5 bg-green rounded-full ">
+                    {" "}
+                    <span className="ml-6 mt-1 "> Validé</span>{" "}
+                  </div>
+                ) : (
+                 <div className=" flex flex-row w-25 h-25"> 
+              
+                  <div className="  w-5 h-5 bg-red rounded-full mb-5 ">
+                   <span className="ml-6 w-10"> non validé</span>
+                   
+                  </div></div>
+                )}
+              </div>
             </div>
           </div>
 
@@ -146,11 +173,7 @@ const ProfilPro = () => {
           <div className=" mt-8 flex flex-col md:flex-row  space-x-0 space-y-2 md:space-x-4 md:space-y-0  ">
             {/* Premier conteneur - Graphe des utilisateurs */}
             <div className=" text-letter-grey w-full md:w-1/3 bg-black-button p-4 shadow rounded-lg border border-border-black-button">
-              {userData.improved ? (
-                <div className="w-5 h-5 bg-green rounded-full "></div>
-              ) : (
-                <div className="w-5 h-5 bg-red rounded-full "></div>
-              )}
+              
 
               <div className="textfirstcontainer text-center mt-3">
                 <h1 className="sm:text-base lg:text:oxl">userData.name</h1>
@@ -176,10 +199,12 @@ const ProfilPro = () => {
                 Equintérim !{" "}
               </h1>
               <div className="mt-4">
-             <span > Vous avez le choix entre déposer une annonce ou contacter le profil de votre choix.</span>
-
+                <span>
+                  {" "}
+                  Vous avez le choix entre déposer une annonce ou contacter le
+                  profil de votre choix.
+                </span>
               </div>
-             
             </div>
 
             <div className="mt-7">
@@ -212,9 +237,7 @@ const ProfilPro = () => {
           </div>
 
           {/* Quatrième conteneur - Tableau des transactions */}
-          <div className="mt-8 border border-border-black-button bg-black-button p-4 shadow rounded-lg">
-        
-          </div>
+          <div className="mt-8 border border-border-black-button bg-black-button p-4 shadow rounded-lg"></div>
         </div>
       </div>
     </div>

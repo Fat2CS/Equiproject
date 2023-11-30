@@ -59,7 +59,7 @@ export default function SignIn() {
   return (
     <div className="flex min-h-full flex-1 flex-col  px-6 py-8 lg:px-20 lg:m-0 lg:flex-row ">
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
-        <div className=" mx-auto text-center w-1/2 lg:mx-0 lg:mr-8 lg:relative lg:right-8 ">
+        <div className=" w-1/2 lg:mx-0 lg:mr-8 lg:relative lg:right-8 ">
           <Link href={"/"}>
             <Image
               width={100}
@@ -135,7 +135,7 @@ export default function SignIn() {
                 ref={passwordRef}
                 autoComplete="current-password"
                 required
-                className=" block w-full rounded-full border  py-3.5 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button "
+                className="block w-full rounded-full border  py-3.5 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button "
               />
             </div>
             <div className="mt-5">
@@ -195,11 +195,11 @@ export default function SignIn() {
         ;
       </div>
 
-      <div className="py-20 lg:ml-20 lg:mt-20 sm:w-full mx-auto mt-5 text-center lg:px-10  ">
+      <div className="  items-center justify-center w-full h-full py-20 lg:ml-20 lg:mt-20 sm:w-full mx-auto mt-5 text-center lg:px-10  ">
         <Image
           className=" lg:mt-20 rounded-full object-cover"
-          width={517}
-          height={517}
+          width={617}
+          height={617}
           sizes="50vw"
           src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1700832878/EQUINTERIM/t3fd8t7psbvnmreezlib.png"
           alt="Your Company"

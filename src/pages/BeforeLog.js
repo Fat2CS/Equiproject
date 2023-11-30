@@ -70,14 +70,7 @@ export default function BeforeLog() {
           />
         </Link>
 
-        <div className="ml-8">
-            <button
-              type="submit"
-              className="flex w-full justify-center rounded-full bg-letter-orange px-3 py-3.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-letter-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-letter-orange-600"
-            >
-              Se connecter
-            </button>
-          </div>
+       
          
         </div>
 
@@ -89,13 +82,13 @@ export default function BeforeLog() {
         </div>
         <div>
           <div
-            className="flex ml-2 m-6 
+            className="flex mb-4 mt-4 md:mt-8 md:mb-8  w-full  md:w-96 
             "
           >
-            <div className="squareorange bg-letter-orange text-letter-grey font-bold text-sm px-1 md:text-lg md:w-18 py-2 text-center md:text-start">
+            <div className="squareorange bg-letter-orange text-letter-grey font-bold text-sm px-2  md:text-lg md:w-18 py-2 text-center md:text-start">
               Quelle
             </div>
-            <div className=" squareblack bg-black-button bg-opacity-80 font-bold text-letter-grey rounded-e-2xl px-2 text-sm md:text-lg md:pr-20 py-2 ">
+            <div className=" squareblack bg-black-button bg-opacity-80 font-bold text-letter-grey rounded-e-2xl px-2 text-sm md:text-lg md:pr-20 py-2 w-full ">
              est votre situation ?
             </div>
           </div>
@@ -108,16 +101,22 @@ export default function BeforeLog() {
             
             <div className="mt-2">
 
-
-                <button className=" text-left block w-full  border-2 border-border-black-button py-6 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button ">
+              <Link href={"/SignIn"}>
+              
+              <button className=" text-left block w-full  border-2 border-border-black-button py-6 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button ">
                    <div><span>UN PROFESSIONNEL</span></div> 
                     <span>Je suis à la recherche d'un prestataire </span>
                 </button>
-
-                <button className=" text-left mt-12 block w-full  border-2 border-border-black-button py-6 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button ">
+              </Link>
+                
+              <Link href={"FreelancerSign"}>
+              
+               <button className=" text-left mt-12 block w-full  border-2 border-border-black-button py-6 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button ">
                    <div><span>UN PRESTATIRE</span></div> 
                     <span>Je suis à la recherche d'une mission </span>
                 </button>
+              </Link>
+               
              
             </div>
           </div>
@@ -133,14 +132,20 @@ export default function BeforeLog() {
     
 
       <div className="py-20  lg:ml-20 lg:mt-20  sm:w-full mx-auto mt-5 text-center lg:px-10  ">
-          <Image className="rounded-full object-cover"
-            width={517}
-            height={517}
+      
+
+          <div className=" flex items-center justify-center w-full h-full">
+<Image className="rounded-full object-cover"
+            width={617}
+            height={617}
             sizes="50vw"
             src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1700832878/EQUINTERIM/t3fd8t7psbvnmreezlib.png"
             alt="Your Company"
           />
         </div>
+
+          </div>
+          
     </div>
   );
 }

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { getDoc, doc, getDocs, collection } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { db } from "../../firebase";
-
+import Image from "next/image";
 // icons
 import { PiEnvelopeThin } from "react-icons/pi";
 
@@ -25,6 +25,57 @@ const FindMission = () => {
   const [job, setJob] = useState("");
   const [locality, setLocality] = useState("");
   const [level, setLevel] = useState("");
+
+  const [selectedCategory, setSelectedCategory] = useState(""); // État pour la catégorie sélectionnée
+
+  // Options pour les catégories
+  const categories = [
+    "Enseignement et entrainement",
+    "Bien être animal",
+    "Écurie",
+    "Concours"
+  ];
+
+  const getJobsForCategory = (category) => {
+    switch (category) {
+      case "Enseignement et entrainement":
+        return [
+          "coach Cso ",
+          "coach dressage",
+          "cavalier Cso ",
+          "cavalier dressage ",
+          "ethologie",
+          "spectacle ",
+          "debourrage",
+          "travail du jeune cheval ",
+          "valorisation"
+        ];
+      case "Bien être animal":
+        return [
+          "khine/ostheo",
+          "accupuncteur",
+          "masseur ",
+          "communication animale",
+          "bitfitter",
+          "saddlefitter"
+        ];
+      case "Écurie":
+        return [
+          "groom maison",
+          "palfrenier soigneur",
+          "homme/femme d entretien",
+          "conducteur d engin"
+        ];
+      case "Concours":
+        return ["groom concours", "groom cavalier", "transporteur (VL,PL,BE)"];
+      default:
+        return [];
+    }
+  };
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
+
   //   useEffect(() => {
   //     // Extrait l'ID de l'URL
   //     const userId = router.query.userId;
@@ -162,6 +213,7 @@ const FindMission = () => {
           <div className="md:relative md:w-1/3 py-15 ">
             <div className="text-letter-grey font-bold text-center text-lg mt-4">
               <h1>Trouve la mission de tes rêves </h1>
+              <span className="text-sm">Trouvez facilement votre prochaine mission </span>
             </div>
           </div>
 
@@ -170,45 +222,76 @@ const FindMission = () => {
             {/* Premier conteneur - Graphe des utilisateurs */}
             <div className=" text-letter-grey w-full md:w-1/3 p-4 shadow  ">
               <form onSubmit={""} className="space-y-6 lg:ml-4">
-                <div>
-                  <div className="mt-2">
-                    <input
-                 
-                      id="job"
-                      name="job"
-                      type="job"
-                      autoComplete="job"
-                      required
-                      // ref={}
 
-                      className="block w-full rounded-full border-0 py-3.5  px-2 text-grey shadow-sm ring-1 ring-inset ring-letter-grey-900 placeholder-letter-grey focus:ring-2 focus:ring-inset focus:ring-letter-orange-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
+              <div>
+                  {/* Sélecteur de catégorie */}
+                  <label className="text-letter-grey mb-5">
+                   
+                    <select
+                      className=" mt-5 block w-full rounded-full border-0 py-3.5 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button placeholder-letter-orange"
+                      value={selectedCategory}
+                      onChange={handleCategoryChange}
+                    >
+                      <option value="">Sélectionnez une catégorie</option>
+                      {categories.map((category) => (
+                        <option key={category} value={category}>
+                          {category}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
+                  {/* Sélecteur de métier en fonction de la catégorie sélectionnée */}
+                  {selectedCategory && (
+                    <label className="text-letter-grey mt-5">
+                      Quel Métier ?
+                      <select
+                        className=" block w-full rounded-full border-0 py-3.5 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button lg:w-1/2  placeholder-letter-orange"
+                        value={job}
+                        onChange={(e) => setJob(e.target.value)}
+                      >
+                        <option value="">Sélectionnez un métier</option>
+                        {getJobsForCategory(selectedCategory).map((job) => (
+                          <option key={job} value={job}>
+                            {job}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  )}
+                </div>
+                <div>
+                 
                 </div>
 
                 <div>
                   <div className="flex items-center justify-between"></div>
-                  <div className="mt-2">
+
+
+
+                  <div className="mt-5">
                     <input
                       id="Locality"
                       name="Locality"
                       type="Locality"
-                    //   ref={localityRef}
+                      placeholder="Région"
+                          
                       autoComplete="current-password"
                       required
-                      className="block w-full rounded-full border-0 py-3.5  px-2 text-grey shadow-sm ring-1 ring-inset ring-letter-grey-300 placeholder-letter-grey focus:ring-2 focus:ring-inset focus:ring-letter-orange-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-full border  py-3.5 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-orange"
                     />
                   </div>
 
-                  <div className="mt-2">
+                  <div className="mt-5">
                     <input
                       id="Level"
                       name="Level"
                       type="Level"
+                      placeholder="Niveau d'expérience"
                     //   ref={lPasswordRef}
                       autoComplete="current-password"
                       required
-                      className="block w-full rounded-full border-0 py-3.5  px-2 text-grey shadow-sm ring-1 ring-inset ring-letter-grey-300 placeholder-letter-grey focus:ring-2 focus:ring-inset focus:ring-letter-orange-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-full border  py-3.5 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-orange"
                     />
                   </div>
                 </div>
@@ -218,7 +301,7 @@ const FindMission = () => {
                     type="submit"
                     className="flex w-full justify-center rounded-full bg-letter-orange px-3 py-3.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-letter-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-letter-orange-600"
                   >
-                    Me connecter
+                   Valider
                   </button>
                 </div>
               </form>
@@ -226,102 +309,26 @@ const FindMission = () => {
 
             {/* Deuxième conteneur - Graphe des commerces */}
             <div className="w-full md:w-2/3">
-              <span
-                className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
-                    mt-8 mb-4
-                    "
-              >
-                {" "}
-                Description
-              </span>
-              <div className=" bg-black-button border border-border-black-button p-4 shadow rounded-lg  text-letter-grey overflow-y-auto relative mt-5">
-                <div className="flex justify-end">
-                  <FaPencil className="text-letter-orange mt-1 mr-2" />
-                </div>
-                <h1>Description </h1>
-                <h1>userData.description</h1>
-                <span>Décris toi en quelques mots </span>
-                <h1>Expériences </h1>
-                <h1>userData.level</h1>
-                <span></span>
-              </div>
 
-              <div className="mt-5">
-                <span
-                  className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
-                     mb-4
-                    "
-                >
-                  {" "}
-                  Éxpériences
-                </span>
-              </div>
+            <Image
+              className="rounded-full object-cover mx-auto "
+              width={500}
+              height={500}
+              sizes="(max-width: 640px) 100vw, (max-width: 868px) 50vw, 60vw"
+              src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1700833695/EQUINTERIM/aj42obgqctyyktfmq7yv.png"
+              alt="cavalier"
+            />
+            
 
-              <div className="w-full  mt-5  bg-black-button border border-border-black-button p-4 shadow rounded-lg  text-letter-grey overflow-y-auto">
-                <div className="flex justify-end">
-                  <FaPencil className="text-letter-orange mt-1 mr-2" />
-                </div>
-                <h1>Expériences </h1>
-                <h1>userData.level</h1>
-                <span>Décris toi en quelques mots </span>
-              </div>
+              
+              
             </div>
           </div>
 
-          {/* Troisième conteneur - Tableau des autorisations en attente */}
+       
+         
 
-          <div className="mt-5">
-            <span
-              className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
-                     mb-4
-                    "
-            >
-              {" "}
-              Candidatures
-            </span>
-          </div>
-          <div className=" h-40vh md:flex  md:space-x-10 md:text-center mt-5 bg-black-button border border-border-black-button p-4 shadow rounded-lg text-letter-grey m-auto ">
-            <div className=" sm:text-basemd:mt-5">
-              {" "}
-              <h1>Candidatures </h1>
-              <div className="mt-4">
-                <span> J'ai candidaté pour le poste de groom</span>
-              </div>
-            </div>
-
-            <div className="mt-7">
-              <div className="text-letter-orange mt-2 text-center text-base">
-                <div>
-                  <span className="text-letter-grey">date</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-9">
-              <div>
-                <span className="text-letter-grey">lieu</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Quatrième conteneur - Tableau des transactions */}
-          <div className="mt-5">
-            <span
-              className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
-                     mb-4
-                    "
-            >
-              {" "}
-              Avis
-            </span>
-          </div>
-
-          <div className="mt-8 border border-border-black-button bg-black-button p-4 shadow rounded-lg text-letter-grey">
-            <span>Avis </span>
-            <div>
-              <span>Merci pour ton ravaille groom soigneuse et sérieuse</span>
-            </div>
-          </div>
+        
         </div>
       </div>
     </div>
