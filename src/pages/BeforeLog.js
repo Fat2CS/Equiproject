@@ -68,7 +68,7 @@ export default function BeforeLog() {
               
               <button className=" text-left block w-full  border-2 border-border-black-button py-6 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button ">
                    <div><span>UN PROFESSIONNEL</span></div> 
-                    <span>Je suis à la recherche d'un prestataire </span>
+                    <span>Je suis à la recherche dun prestataire </span>
                 </button>
               </Link>
                 
@@ -76,7 +76,7 @@ export default function BeforeLog() {
               
                <button className=" text-left mt-12 block w-full  border-2 border-border-black-button py-6 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button ">
                    <div><span>UN PRESTATIRE</span></div> 
-                    <span>Je suis à la recherche d'une mission </span>
+                    <span>Je suis à la recherche dune mission </span>
                 </button>
               </Link>
                
