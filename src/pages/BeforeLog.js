@@ -9,7 +9,6 @@ import Link from "next/link";
 // import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useRef } from "react";
-import { auth, db } from "../firebase";
 
 export default function BeforeLog() {
   const router = useRouter();
@@ -18,43 +17,7 @@ export default function BeforeLog() {
   const confirmPasswordRef = useRef();
   const type = "Professionnel";
 
-  const handleSignIn = async (e) => {
-    e.preventDefault();
-
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
-    const confirmPassword = confirmPasswordRef.current.value;
-
-    if (password !== confirmPassword) {
-      alert("Les mots de passe ne correspondent pas.");
-      return;
-    }
-
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const userId = userCredential.user.uid;
-      console.log("Compte créé avec succès. ID de l'utilisateur:", userId);
-      // Créer un document pour l'utilisateur dans Firestore avec les propriétés initiales
-      await addDoc(collection(db, "User"), {
-        userId: userId,
-        email: email,
-        type: type
-        // ... Autres propriétés initiales ...
-      });
-
-      console.log("Document utilisateur créé avec succès.");
-      router.push(`./ProfilCreate/${userId}`);
-      // router.push(`./ProfilCreate/?id=${userId}`);
-      // <NextLink href={`./user/${userID}`}/>
-    } catch (error) {
-      // Gérer les erreurs d'inscription
-      console.error("Error during signup:", error.message);
-    }
-  };
+  
 
   return (
     <div className="flex  min-h-full flex-1 flex-col  px-6 py-12 lg:px-20 lg:m-0 lg:flex-row ">
