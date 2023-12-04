@@ -39,17 +39,14 @@ export default function SignIn() {
       const userId = userCredential.user.uid;
       console.log("Compte créé avec succès. ID de l'utilisateur:", userId);
       // Créer un document pour l'utilisateur dans Firestore avec les propriétés initiales
-      await addDoc(collection(db, "User"), {
+      const docref=await addDoc(collection(db, "Professional"), {
         userId: userId,
         email: email,
         type: type
-        // ... Autres propriétés initiales ...
       });
 
-      console.log("Document utilisateur créé avec succès.");
-      router.push(`./ProfilCreate/${userId}`);
-      // router.push(`./ProfilCreate/?id=${userId}`);
-      // <NextLink href={`./user/${userID}`}/>
+      console.log("Document utilisateur créé avec succès."+docref.id);
+      router.push(`./ProfilCreate/${docref.id}`);
     } catch (error) {
       // Gérer les erreurs d'inscription
       console.error("Error during signup:", error.message);
@@ -172,7 +169,7 @@ export default function SignIn() {
                 htmlFor="remember"
                 className=" ms-2 text-sm font-medium text-letter-grey dark:text-gray-300"
               >
-                J'accepte{" "}
+                Jaccepte{" "}
                 <a
                   href="#"
                   className="text-letter-orange hover:underline dark:letter-orange"

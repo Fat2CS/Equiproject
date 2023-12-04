@@ -18,44 +18,7 @@ export default function BeforeLog() {
   const confirmPasswordRef = useRef();
   const type = "Professionnel";
 
-  const handleSignIn = async (e) => {
-    e.preventDefault();
-
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
-    const confirmPassword = confirmPasswordRef.current.value;
-
-    if (password !== confirmPassword) {
-      alert("Les mots de passe ne correspondent pas.");
-      return;
-    }
-
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const userId = userCredential.user.uid;
-      console.log("Compte créé avec succès. ID de l'utilisateur:", userId);
-      // Créer un document pour l'utilisateur dans Firestore avec les propriétés initiales
-      await addDoc(collection(db, "User"), {
-        userId: userId,
-        email: email,
-        type: type
-        // ... Autres propriétés initiales ...
-      });
-
-      console.log("Document utilisateur créé avec succès.");
-      router.push(`./ProfilCreate/${userId}`);
-      // router.push(`./ProfilCreate/?id=${userId}`);
-      // <NextLink href={`./user/${userID}`}/>
-    } catch (error) {
-      // Gérer les erreurs d'inscription
-      console.error("Error during signup:", error.message);
-    }
-  };
-
+  
   return (
     <div className="flex  min-h-full flex-1 flex-col  px-6 py-12 lg:px-20 lg:m-0 lg:flex-row ">
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
@@ -111,12 +74,12 @@ export default function BeforeLog() {
 
                 <button className=" text-left block w-full  border-2 border-border-black-button py-6 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button ">
                    <div><span>UN PROFESSIONNEL</span></div> 
-                    <span>Je suis à la recherche d'un prestataire </span>
+                    <span>Je suis à la recherche dun prestataire </span>
                 </button>
 
                 <button className=" text-left mt-12 block w-full  border-2 border-border-black-button py-6 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button ">
                    <div><span>UN PRESTATIRE</span></div> 
-                    <span>Je suis à la recherche d'une mission </span>
+                    <span>Je suis à la recherche dune mission </span>
                 </button>
              
             </div>
