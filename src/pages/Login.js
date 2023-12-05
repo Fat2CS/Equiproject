@@ -4,127 +4,166 @@ import React from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRef } from "react";
 import { auth } from "../firebase";
+import {
+	getDoc,
+	doc,
+	query,
+	where,
+	getDocs,
+	collection,
+} from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
+import { db } from "../firebase";
+import { useState } from "react";
+import { useRouter } from "next/router";
+
 function Login() {
-  const lEmailRef = useRef();
-  const lPasswordRef = useRef();
+	const lEmailRef = useRef();
+	const lPasswordRef = useRef();
+	const [docref, setDocRef] = useState(null);
+	const router = useRouter();
 
-  const Login = (e) => {
-    e.preventDefault();
-    const email = lEmailRef.current.value;
-    const password = lPasswordRef.current.value;
+	const Login = (e) => {
+		e.preventDefault();
+		const email = lEmailRef.current.value;
+		const password = lPasswordRef.current.value;
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
-        alert("login succefull");
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alerte(error.message);
-      });
-  };
+		signInWithEmailAndPassword(auth, email, password)
+			.then((userCredential) => {
+				// Signed in
+				const user = userCredential.user;
+				console.log(user.uid);
+				alert("login succefull");
+				fetchDocId(user.uid);
+				router.push(`/ProfilPro/${docref}`);
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				alert(error.message);
+			});
+	};
 
-  return (
-    <div className="flex min-h-full flex-1 flex-col  px-6 py-12 lg:px-2 lg:flex-row">
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
-        <div className=" mx-auto text-center w-1/2 lg:mx-0 lg:mr-8 lg:relative lg:right-8 ">
+	async function fetchDocId(userId) {
+		try {
+			// Crée une référence à la collection "User" et exécute une requête où le champ "userId" correspond à la valeur recherchée
+			const querySnapshot = await getDocs(
+				query(
+					collection(db, "User"),
+					where("userId", "==", "Fq3Hd1jNXONleZyW85pKzR8zqeB3")
+				)
+			);
 
-          <Link href={"/"}>
-          <Image
-            width={100}
-            height={100}
-            sizes="20vw"
-            src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1700827173/EQUINTERIM/bvofggf7jwc5wptxilbn.png"
-            alt="Your Company"
-          />
-          </Link>
-          
-        </div>
-        <form onSubmit={Login} className="space-y-6 lg:ml-4">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium leading-6 text-letter-grey"
-            >
-              Email address
-            </label>
-            <div className="mt-2">
-              <input
-              
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                ref={lEmailRef}
-                // className=" block w-full rounded-md border-0 py-1.5 letter-grey  bg-black ring-1 ring-inset ring-gray-300 placeholder:bg-black focus:ring-2 focus:ring-inset focus:ring-letter-orange sm:text-sm sm:leading-6"
-                className="  block w-full rounded-full border-0 py-3.5 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button "
-              />
-            </div>
-          </div>
+			// Vérifie si des documents correspondant à la requête existent
+			if (!querySnapshot.empty) {
+				querySnapshot.forEach((doc) => {
+					let docRef = doc.data().docref;
+					router.push(`/ProfilPro/${docRef}`);
 
-          <div>
-            <div className="flex items-center justify-between">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium leading-6 text-letter-grey"
-              >
-                Password
-              </label>
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-semibold text-letter-orange
+					// Utilise doc.id pour obtenir l'ID du document si nécessaire
+				});
+			} else {
+				// Gère le cas où aucun document ne correspond à la requête
+				console.error("No matching documents");
+			}
+		} catch (error) {
+			console.error("Error fetching user data:", error);
+		}
+	}
+
+	return (
+		<div className="flex min-h-full flex-1 flex-col  px-6 py-12 lg:px-2 lg:flex-row">
+			<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
+				<div className=" mx-auto text-center w-1/2 lg:mx-0 lg:mr-8 lg:relative lg:right-8 ">
+					<Link href={"/"}>
+						<Image
+							width={100}
+							height={100}
+							sizes="20vw"
+							src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1700827173/EQUINTERIM/bvofggf7jwc5wptxilbn.png"
+							alt="Your Company"
+						/>
+					</Link>
+				</div>
+				<form onSubmit={Login} className="space-y-6 lg:ml-4">
+					<div>
+						<label
+							htmlFor="email"
+							className="block text-sm font-medium leading-6 text-letter-grey"
+						>
+							Email address
+						</label>
+						<div className="mt-2">
+							<input
+								id="email"
+								name="email"
+								type="email"
+								autoComplete="email"
+								required
+								ref={lEmailRef}
+								// className=" block w-full rounded-md border-0 py-1.5 letter-grey  bg-black ring-1 ring-inset ring-gray-300 placeholder:bg-black focus:ring-2 focus:ring-inset focus:ring-letter-orange sm:text-sm sm:leading-6"
+								className="  block w-full rounded-full border-0 py-3.5 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button "
+							/>
+						</div>
+					</div>
+
+					<div>
+						<div className="flex items-center justify-between">
+							<label
+								htmlFor="password"
+								className="block text-sm font-medium leading-6 text-letter-grey"
+							>
+								Password
+							</label>
+							<div className="text-sm">
+								<a
+									href="#"
+									className="font-semibold text-letter-orange
                    hover:text-letter-orange-500"
-                >
-                  mot de passe oublié ?
-                </a>
-              </div>
-            </div>
-            <div className="mt-2">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                ref={lPasswordRef}
-                autoComplete="current-password"
-                required
-                className="block w-full rounded-full border-0 py-3.5  px-2 text-grey shadow-sm ring-1 ring-inset ring-letter-grey-300 placeholder-letter-grey focus:ring-2 focus:ring-inset focus:ring-letter-orange-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
+								>
+									mot de passe oublié ?
+								</a>
+							</div>
+						</div>
+						<div className="mt-2">
+							<input
+								id="password"
+								name="password"
+								type="password"
+								ref={lPasswordRef}
+								autoComplete="current-password"
+								required
+								className="block w-full rounded-full border-0 py-3.5  px-2 text-grey shadow-sm ring-1 ring-inset ring-letter-grey-300 placeholder-letter-grey focus:ring-2 focus:ring-inset focus:ring-letter-orange-600 sm:text-sm sm:leading-6"
+							/>
+						</div>
+					</div>
 
-          <div>
-            <button
-              type="submit"
-              className="flex w-full justify-center rounded-full bg-letter-orange px-3 py-3.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-letter-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-letter-orange-600"
-            >
-              Me connecter
-            </button>
-          </div>
-        </form>
-        ;
-      </div>
+					<div>
+						<button
+							type="submit"
+							className="flex w-full justify-center rounded-full bg-letter-orange px-3 py-3.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-letter-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-letter-orange-600"
+						>
+							Me connecter
+						</button>
+					</div>
+				</form>
+				;
+			</div>
 
-      <div className="mt-10 lg:py-20 sm:mx-auto sm:w-full sm:max-w-sm">
-        <div className="mx-auto text-center w-full">
-          <Image
-          className="rounded-full object-cover"
-            width={617}
-            height={617}
-            sizes="20vw"
-            src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1700833526/EQUINTERIM/f1pt5zoy0tu2t8hxwlyj.png"
-            alt="Your Company"
-          />
-        </div>
-      </div>
-    </div>
-  );
+			<div className="mt-10 lg:py-20 sm:mx-auto sm:w-full sm:max-w-sm">
+				<div className="mx-auto text-center w-full">
+					<Image
+						className="rounded-full object-cover"
+						width={617}
+						height={617}
+						sizes="20vw"
+						src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1700833526/EQUINTERIM/f1pt5zoy0tu2t8hxwlyj.png"
+						alt="Your Company"
+					/>
+				</div>
+			</div>
+		</div>
+	);
 }
 export default Login;
