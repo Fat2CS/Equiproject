@@ -63,6 +63,11 @@ export default function SignIn() {
         type: type
       });
 
+      const ref=await addDoc(collection(db, "User"), {
+        userId: userId,
+        docref: docref.id,
+      });
+
       console.log("Document utilisateur créé avec succès."+docref.id);
       router.push(`./ProfilCreate/${docref.id}`);
     } catch (error) {

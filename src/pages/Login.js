@@ -4,15 +4,25 @@ import React from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRef } from "react";
 import { auth } from "../firebase";
+import {
+	getDoc,
+	doc,
+	query,
+	where,
+	getDocs,
+	collection,
+} from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
-import { useFirebase } from "../firebase";
+
+import { db } from "../firebase";
+import { useState } from "react";
 import { useRouter } from "next/router";
 
 function Login() {
 	const lEmailRef = useRef();
 	const lPasswordRef = useRef();
-	const firebase = useFirebase();
+	const [docref, setDocRef] = useState(null);
 	const router = useRouter();
 
 	const Login = (e) => {
@@ -20,25 +30,49 @@ function Login() {
 		const email = lEmailRef.current.value;
 		const password = lPasswordRef.current.value;
 
-		try {
-			firebase
-				.signInWithEmailAndPassword(firebase.auth, email, password)
-				.then((userCredential) => {
-					const user = userCredential.user;
-					router.push({
-						pathname: "/",
-						query: { userId: user.uid },
-					});
-				})
-				.catch((error) => {
-					const errorCode = error.code;
-					const errorMessage = error.message;
-					alert(`Firebase Error: ${errorCode} - ${errorMessage}`);
-				});
-		} catch (err) {
-			console.log("Login in Issue");
-		}
+		signInWithEmailAndPassword(auth, email, password)
+			.then((userCredential) => {
+				// Signed in
+				const user = userCredential.user;
+				console.log(user.uid);
+				alert("login succefull");
+				fetchDocId(user.uid);
+				router.push(`/ProfilPro/${docref}`);
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				alert(error.message);
+			});
 	};
+
+	async function fetchDocId(userId) {
+		try {
+			// Crée une référence à la collection "User" et exécute une requête où le champ "userId" correspond à la valeur recherchée
+			const querySnapshot = await getDocs(
+				query(
+					collection(db, "User"),
+					where("userId", "==", "Fq3Hd1jNXONleZyW85pKzR8zqeB3")
+				)
+			);
+
+			// Vérifie si des documents correspondant à la requête existent
+			if (!querySnapshot.empty) {
+				querySnapshot.forEach((doc) => {
+					let docRef = doc.data().docref;
+					router.push(`/ProfilPro/${docRef}`);
+
+					// Utilise doc.id pour obtenir l'ID du document si nécessaire
+				});
+			} else {
+				// Gère le cas où aucun document ne correspond à la requête
+				console.error("No matching documents");
+			}
+		} catch (error) {
+			console.error("Error fetching user data:", error);
+		}
+	}
+
 
 	return (
 		<div className="flex min-h-full flex-1 flex-col  px-6 py-12 lg:px-2 lg:flex-row">
