@@ -37,10 +37,10 @@ const Chat = ({ messages }) => {
               >
                 <div>
                   <span
-                    className={`px-4 py-2 rounded-lg inline-block ${
+                    className={`mt-5 px-4 py-2 rounded-lg inline-block ${
                       index % 2 === 0
                         ? "rounded-bl-none bg-gray-300 text-gray-600"
-                        : "rounded-br-none bg-blue-600 text-white"
+                        : "rounded-br-none bg-border-black-button text-white"
                     }`}
                   >
                     {message.text}
