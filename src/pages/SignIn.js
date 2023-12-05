@@ -25,6 +25,7 @@ export default function SignIn() {
 			return;
 		}
 
+<<<<<<< HEAD
    try {
         firebase
 					.createUserWithEmailAndPassword(firebase.auth, email, password)
@@ -46,6 +47,30 @@ export default function SignIn() {
         alert("Sign in error");
       }
 	};
+=======
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const userId = userCredential.user.uid;
+      console.log("Compte créé avec succès. ID de l'utilisateur:", userId);
+      // Créer un document pour l'utilisateur dans Firestore avec les propriétés initiales
+      const docref=await addDoc(collection(db, "Professional"), {
+        userId: userId,
+        email: email,
+        type: type
+      });
+
+      console.log("Document utilisateur créé avec succès."+docref.id);
+      router.push(`./ProfilCreate/${docref.id}`);
+    } catch (error) {
+      // Gérer les erreurs d'inscription
+      console.error("Error during signup:", error.message);
+    }
+  };
+>>>>>>> 67efd49284c0532fc2c5e095fcc59065e05425c4
 
 	return (
 		<div className="flex min-h-full flex-1 flex-col px-6 py-12 lg:px-2 lg:flex-row">
@@ -121,6 +146,7 @@ export default function SignIn() {
 							</div>
 						</div>
 
+<<<<<<< HEAD
 						<div className="flex items-start mb-6 mt-6">
 							<div className="flex items-center h-5">
 								<input
@@ -145,6 +171,32 @@ export default function SignIn() {
 							</label>
 						</div>
 					</div>
+=======
+            <div className="flex items-start mb-6 mt-6">
+              <div className="flex items-center h-5">
+                <input
+                  id="remember"
+                  type="checkbox"
+                  value=""
+                  className=" w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                  required
+                />
+              </div>
+              <label
+                htmlFor="remember"
+                className=" ms-2 text-sm font-medium text-letter-grey dark:text-gray-300"
+              >
+                Jaccepte{" "}
+                <a
+                  href="#"
+                  className="text-letter-orange hover:underline dark:letter-orange"
+                >
+                  les conditions générales de vente
+                </a>
+              </label>
+            </div>
+          </div>
+>>>>>>> 67efd49284c0532fc2c5e095fcc59065e05425c4
 
 					<div>
 						<button

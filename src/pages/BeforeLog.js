@@ -18,7 +18,6 @@ export default function BeforeLog() {
   const type = "Professionnel";
 
   
-
   return (
     <div className="flex  min-h-full flex-1 flex-col  px-6 py-12 lg:px-20 lg:m-0 lg:flex-row ">
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">

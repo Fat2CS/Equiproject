@@ -2,22 +2,13 @@
 import React, { useState } from "react";
 
 import { db } from "../../firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc,updateDoc,doc } from "firebase/firestore";
 
 import { useRouter } from "next/router";
 
-// export async function getServerSideProps(context) {
-//   const { id } = context.params;
-//   console.log("id", id);
-//   return {
-//     props: {
-//       userId : id
-//     }
-//   };
-// }
-
 function ProfilCreate() {
   const router = useRouter();
+  const { id } = router.query;
   const [name, setName] = useState("");
 
   const [username, setUsername] = useState("");
@@ -32,16 +23,15 @@ function ProfilCreate() {
   const handleSubmit = async (e) => {
     
     e.preventDefault();
-    // const userId = router && router.query ? router.query.userId : null;
 
     const added = await addDataToFireStore(
       name,
       username,
       business,
       phone,
-      true, // Assurez-vous que 'approved' est correct ici
-      "user", // Assurez-vous que 'role' est correct ici
-      "", // Assurez-vous que 'annonces' est correct ici
+      true, 
+      "user",
+      "",
       adress,
       postal,
       
@@ -70,46 +60,33 @@ function ProfilCreate() {
     adress,
     postal
   ) {
-    try {
-      console.log(
-        "Attempting to add data:",
-        name,
-        username,
-        business,
-        phone,
-        approved,
-        role,
-        annonces,
-        adress,
-        postal
-      );
-      const collectionRef = collection(db, "User");
-      console.log("Collection Reference:", collectionRef);
+		try {
+			const docId = id; // Assuming 'id' is the ID of the specific user document
 
-      // const docRef = await addDoc(
-      //   collection(db, "User", userId),
-      const docRef = await addDoc(collectionRef, {
-        name: name,
-        username: username,
-        business: business,
-        phone: phone,
-        approved: true,
-        role: "user",
-        annonces: "",
-        adress: adress || "",
-        postal: postal || ""
-        // adress: adress ,
-        // ...(postal && { postal })
-      });
+			const docRef = doc(db, "Professional", docId); // Reference to the specific document in 'Professional' collection
 
-      console.log("document ecrit pour cette id :", docRef.id);
-      router.push(`/ProfilPro/${docRef.id}`);
-      return true;
-    } catch (error) {
-      console.error("error pour l'ajout", error);
-      return false;
-    }
-  }
+			await updateDoc(docRef, {
+				// Update the document with new data
+				name: name,
+				username: username,
+				business: business,
+				phone: phone,
+				approved: true,
+				role: "user",
+				annonces: "",
+				adress: adress || "",
+				postal: postal || "",
+			});
+
+			console.log("Document updated with ID: ", docId);
+			// Redirect or perform further actions as needed
+			router.push(`/ProfilPro/${docId}`);
+			return true;
+		} catch (error) {
+			console.error("Error updating document: ", error);
+			return false;
+		}
+	}
 
   return (
     <div className="flex  min-h-full flex-1 flex-col  px-3 py-12 lg:px-2 ">
@@ -166,7 +143,7 @@ function ProfilCreate() {
               htmlFor="name"
               className="block text-sm font-medium leading-6 text-letter-grey"
             >
-              Nom de l'écurie
+              Nom de lécurie
             </label>
             <div className="mt-2">
               <input
