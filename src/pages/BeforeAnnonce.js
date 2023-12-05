@@ -59,7 +59,7 @@ const BeforeAnnonce = () => {
  <div className="text-center ">
 
   <Link href={"AnnoncesCreate"}>
-   <button class="bg-letter-orange  hover:bg-letter-grey hover:text-black-body font-bold py-4 px-4 rounded-full mt-9 ">
+   <button className="bg-letter-orange  hover:bg-letter-grey hover:text-black-body font-bold py-4 px-4 rounded-full mt-9 ">
                 Déposer mon annonce
               </button>
   </Link>

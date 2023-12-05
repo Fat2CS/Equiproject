@@ -75,7 +75,7 @@ export default function BeforeLog() {
               <Link href={"FreelancerSign"}>
               
                <button className=" text-left mt-12 block w-full  border-2 border-border-black-button py-6 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button ">
-                   <div><span>UN PRESTATIRE</span></div> 
+                   <div><span>UN PRESTATAIRE</span></div> 
                     <span>Je suis à la recherche dune mission </span>
                 </button>
               </Link>

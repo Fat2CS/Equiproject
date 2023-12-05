@@ -34,7 +34,7 @@ const Navbar = () => {
               viewBox="0 0 24 24"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M22 5H2a1 1 0 0 1 0-2h20a1 1 0 0 1 0 2zM2 11a1 1 0 0 1 0-2h20a1 1 0 0 1 0 2H2zm20 4a1 1 0 0 1 0-2H2a1 1 0 0 1 0 2h20z"
               />
             </svg>
@@ -92,9 +92,9 @@ const Navbar = () => {
                 stroke="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M6 18L18 6M6 6l12 12"
                 ></path>
               </svg>
