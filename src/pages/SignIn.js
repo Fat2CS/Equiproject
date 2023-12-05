@@ -25,30 +25,8 @@ export default function SignIn() {
 			return;
 		}
 
-<<<<<<< HEAD
-   try {
-        firebase
-					.createUserWithEmailAndPassword(firebase.auth, email, password)
-					.then((userCredential) => {
-						const user = userCredential.user;
-						localStorage.setItem("user_id", user.uid);
-						router.push({
-							pathname: "/",
-							query: { userId: user.uid },
-						});
-					})
-					.catch((error) => {
-						const errorCode = error.code;
-						const errorMessage = error.message;
-						alert(`Firebase Error: ${errorCode} - ${errorMessage}`);
-					});
-
-      } catch (err) {
-        alert("Sign in error");
-      }
-	};
-=======
     try {
+
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -70,7 +48,6 @@ export default function SignIn() {
       console.error("Error during signup:", error.message);
     }
   };
->>>>>>> 67efd49284c0532fc2c5e095fcc59065e05425c4
 
 	return (
 		<div className="flex min-h-full flex-1 flex-col px-6 py-12 lg:px-2 lg:flex-row">
@@ -146,32 +123,6 @@ export default function SignIn() {
 							</div>
 						</div>
 
-<<<<<<< HEAD
-						<div className="flex items-start mb-6 mt-6">
-							<div className="flex items-center h-5">
-								<input
-									id="remember"
-									type="checkbox"
-									value=""
-									className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-									required
-								/>
-							</div>
-							<label
-								htmlFor="remember"
-								className="ms-2 text-sm font-medium text-letter-grey dark:text-gray-300"
-							>
-								accepte{" "}
-								<a
-									href="#"
-									className="text-letter-orange hover:underline dark:letter-orange"
-								>
-									les conditions générales de vente
-								</a>
-							</label>
-						</div>
-					</div>
-=======
             <div className="flex items-start mb-6 mt-6">
               <div className="flex items-center h-5">
                 <input
@@ -196,7 +147,6 @@ export default function SignIn() {
               </label>
             </div>
           </div>
->>>>>>> 67efd49284c0532fc2c5e095fcc59065e05425c4
 
 					<div>
 						<button
