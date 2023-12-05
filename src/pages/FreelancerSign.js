@@ -48,7 +48,7 @@ export default function FreelancerSign() {
       const userId = userCredential.user.uid;
       console.log("Compte créé avec succès. ID de l'utilisateur:", userId);
       // Créer un document pour l'utilisateur dans Firestore avec les propriétés initiales
-      await addDoc(collection(db, "Freelancer"), {
+      await addDoc(collection(db, "Prestataires"), {
         userId: userId,
         email: email,
         type: type,
@@ -68,8 +68,8 @@ export default function FreelancerSign() {
   };
 
   return (
-    <div className="flex min-h-full flex-1 flex-col  px-6 py-5 lg:overflow-y-hidden lg:py-0 lg:px-20 lg:m-0 lg:flex-row ">
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm lg:w-2.5/3  ">
+    <div className="flex min-h-full flex-1 flex-col  px-6 py-5 lg:overflow-y-hidden lg:py-0 lg:px-20 lg:m-0 lg:flex-row items-center justify-center">
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm lg:w-2.5/3 ">
         <div className=" mx-auto text-center w-1/2 lg:mx-0 lg:mr-8 lg:relative lg:right-8 ">
           <Link href={"/"}>
             <Image
@@ -266,8 +266,8 @@ export default function FreelancerSign() {
       <div className="py-20 lg:ml-20 lg:mt-20 sm:w-full mx-auto mt-5 text-center lg:px-10  ">
         <Image
           className=" lg:mt-20 rounded-full object-cover"
-          width={517}
-          height={517}
+          width={617}
+          height={617}
           sizes="50vw"
           src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1700832878/EQUINTERIM/t3fd8t7psbvnmreezlib.png"
           alt="Your Company"

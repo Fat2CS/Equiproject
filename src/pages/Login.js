@@ -14,6 +14,7 @@ import {
 } from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
+
 import { db } from "../firebase";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -71,6 +72,7 @@ function Login() {
 			console.error("Error fetching user data:", error);
 		}
 	}
+
 
 	return (
 		<div className="flex min-h-full flex-1 flex-col  px-6 py-12 lg:px-2 lg:flex-row">

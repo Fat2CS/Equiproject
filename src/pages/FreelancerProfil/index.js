@@ -71,7 +71,8 @@ const FreelancerProfil = () => {
               <PiEnvelopeThin className="text-letter-orange mt-1 mr-2 w-5 h-5" />
             </div>{" "}
           </Link> */}
-          <Link href="/ProfilPro">
+          
+          <Link href="/FindMission">
             <div className=" items-center space-x-4 text-letter-grey">
               <FaMagnifyingGlass className="text-letter-orange mt-1 mr-2 w-5 h-5" />
             </div>
@@ -115,7 +116,7 @@ const FreelancerProfil = () => {
                 </div>
               </div>{" "}
             </Link>
-            <Link href={"/ProfilPro"}>
+            <Link href={"/FindMission"}>
               <div className="flex ml-2 mt-9">
                 <div>
                   <FaMagnifyingGlass className="text-letter-orange mt-1 mr-2" />

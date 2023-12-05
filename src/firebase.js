@@ -1,33 +1,63 @@
-// Import the functions you need from the SDKs you need
-
-import { getAuth } from 'firebase/auth';
+import React, { createContext, useContext } from "react";
 import { initializeApp } from "firebase/app";
-import { getFirestore} from "firebase/firestore"
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import {
+	getDatabase,
+	ref,
+	push,
+	set,
+	update,
+	onValue,
+	remove,
+} from "firebase/database";
+import {
+	getAuth,
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+} from "firebase/auth";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Your Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBszI99S06zXBZ1e-IzzlfTuh7trMymW2Q",
-  authDomain: "equinterim-5103d.firebaseapp.com",
-  projectId: "equinterim-5103d",
-  storageBucket: "equinterim-5103d.appspot.com",
-  messagingSenderId: "517618343458",
-  appId: "1:517618343458:web:feead07bdaba2f73ddb47b",
-  measurementId: "G-TVZNM9CRJK"
+	apiKey: "AIzaSyBszI99S06zXBZ1e-IzzlfTuh7trMymW2Q",
+	authDomain: "equinterim-5103d.firebaseapp.com",
+	databaseURL:
+		"https://equinterim-5103d-default-rtdb.europe-west1.firebasedatabase.app",
+	projectId: "equinterim-5103d",
+	storageBucket: "equinterim-5103d.appspot.com",
+	messagingSenderId: "517618343458",
+	appId: "1:517618343458:web:feead07bdaba2f73ddb47b",
+	measurementId: "G-TVZNM9CRJK",
+};
+// Create a Firebase context
+const FirebaseContext = createContext(null);
+
+// Firebase provider to wrap your app with
+export const FirebaseProvider = ({ children }) => {
+	const app = initializeApp(firebaseConfig);
+	const db = getDatabase(app);
+	const auth = getAuth(app);
+
+	const firebase = {
+		app,
+		db,
+		auth,
+		push,
+		ref,
+		set,
+		update,
+		onValue,
+		remove,
+		createUserWithEmailAndPassword,
+		signInWithEmailAndPassword,
+	};
+
+	return (
+		<FirebaseContext.Provider value={firebase}>
+			{children}
+		</FirebaseContext.Provider>
+	);
 };
 
-// Initialize Firebase
-// Initialize Firebase
-// const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-// const db = getFirestore(app); 
-// // const db = getFirestore();
-// export db
-// export const auth = getAuth(app);
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-
-export { db, auth };
+// Custom hook to consume the Firebase context
+export const useFirebase = () => {
+	return useContext(FirebaseContext);
+};
