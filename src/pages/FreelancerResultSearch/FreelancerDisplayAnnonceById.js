@@ -17,6 +17,7 @@ import Link from "next/link";
 
 import { FaPencil } from "react-icons/fa6";
 import AnnonceById from "../../components/AnnonceById";
+import FreeNavbar from "@/components/FreeNavbar";
 
 const FreelancerDisplayAnnonceById = () => {
   const router = useRouter();
@@ -62,40 +63,11 @@ const FreelancerDisplayAnnonceById = () => {
       <div className="text-letter-orange">
         <h1>Bienvenue userData.name, </h1>
       </div>
-      <div className="flex flex-row h-screen bg-black-body">
+      <div className="md:flex md:flex-row h-screen bg-black-body ">
         {/* Barre de navigation supérieure */}
 
-        <div className="bg-black-buttonshadow w-full p-2  flex items-center justify-between flex-row md:text-base md:hidden">
-          {/* ... */}
-          <nav className="flex items-center space-x-16 justify-around m-auto">
-            {/* <Link href={`/Message/{${id}`}>
-            <div className="items-center space-x-4 text-letter-grey">
-              <PiEnvelopeThin className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-            </div>{" "}
-          </Link> */}
-
-            <Link href="/FindMission">
-              <div className=" items-center space-x-4 text-letter-grey">
-                <FaMagnifyingGlass className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-              </div>
-            </Link>
-            <Link href="/ProfilPro">
-              <div className=" items-center space-x-4 text-letter-grey">
-                <PiNewspaperClippingLight className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-              </div>{" "}
-            </Link>
-            <Link href="/ProfilPro">
-              <div className=" items-center space-x-4 text-letter-grey">
-                <BsPersonWorkspace className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-              </div>{" "}
-            </Link>
-            <Link href={"/CreateAnnonce/"}>
-              <div className=" items-center space-x-4 text-letter-grey">
-                <RiLogoutCircleRLine className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-              </div>
-            </Link>
-          </nav>
-        </div>
+        <FreeNavbar />
+       
 
         {/* Contenu principal */}
         <div className="flex flex-wrap">

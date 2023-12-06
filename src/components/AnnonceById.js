@@ -8,7 +8,7 @@ const AnnonceById = () => {
       {/* Champ de recherche */}
 
       <div className="md:relative md:w-full py-15 ">
-        <div className=" px-10  profil rounded-lg picture  w-2/3 h-80 bg-letter-orange sm:m-auto  "></div>
+        <div className=" px-10  profil rounded-lg picture  md:w-2/3 h-80 bg-letter-orange sm:m-auto  "></div>
       </div>
 
       {/* Conteneur de graphiques */}
