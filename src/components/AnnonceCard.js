@@ -3,17 +3,24 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AiFillEnvironment } from "react-icons/ai";
-const FreelancerCard = () => {
+const AnnonceCard = () => {
   const [posts, setPosts] = useState([
     // Remplacez ceci par votre propre tableau de données
     {
-      title: "Card Title 1",
-      description: "Description for Card 1",
+      title: "Groom motivé",
+      lieu: "Londres",
+      niveau: "Expert",
+      durée: "1 mois",
+      description:
+        "Je recherche Groom motivé pour un concours qui aura lieu à Londres",
       image: "https://example.com/image1.jpg",
       link: "https://example.com/link1"
     },
     {
-      title: "Card Title 2",
+      title: "Groom dynamique",
+      lieu: "Enghien",
+      niveau: "Débutant",
+      durée: "1 mois",
       description: "Description for Card 2",
       image: "https://example.com/image2.jpg",
       link: "https://example.com/link2"
@@ -24,10 +31,12 @@ const FreelancerCard = () => {
     <div>
       <section className="flex flex-col items-center justify-center mb-22">
         {/* Card List Section */}
-        <section className=" dark:bg-gray-900 py-10 px-12">
-          <div className="text-letter-orange">
+        <section className=" dark:bg-black-button py-10 px-12">
+          <div className="text-letter-grey">
             {" "}
-            <span> Liste des "user.job" trouvé </span>
+            <span className="text-lg"> Annonces de mission disponible </span>
+            <br></br>
+            <span>Toutes les annonces</span>
           </div>
 
           {/* Card Grid */}
@@ -35,7 +44,7 @@ const FreelancerCard = () => {
             {posts.map((post, index) => (
               <div
                 key={index}
-                className="my-8 rounded-lg shadow-lg shadow-gray-200 dark:shadow-gray-900 bg-white dark:bg-gray-800 duration-300 hover:-translate-y-1"
+                className="my-8  rounded-lg shadow-lg shadow-gray-200 dark:shadow-gray-900 bg-black-button dark:bg-gray-800 duration-300 hover:-translate-y-1"
               >
                 {/* Clickable Area */}
                 <div className="cursor-pointer">
@@ -52,25 +61,34 @@ const FreelancerCard = () => {
                         alt="Placeholder"
                         className=" rounded-t-lg h-72 w-full object-cover"
                       />
-
-                      <div className="text-letter-grey absolute bottom-0 mb-10 m-5 ">
-                        <span> David Roux </span>
-                        <div className="flex">
-                          <AiFillEnvironment className="text-letter-orange" />
-                          <span>Lille</span>
-                        </div>
-                      </div>
                     </div>
 
                     <figcaption className="p-4">
                       {/* Title */}
-                      <p className=" text-center text-lg mb-4 font-bold leading-relaxed text-letter-orange dark:text-gray-300">
+                      <p className="  text-lg mb-4 font-bold leading-relaxed text-letter-orange dark:text-gray-300">
                         {post.title}
                       </p>
+                      <div className="flex">
+                        {" "}
+                        <AiFillEnvironment className="text-letter-orange mr-1" />
+                        <small className=" text-center leading-5 text-letter-grey dark:text-gray-400">
+                          {post.lieu}
+                        </small>
+                      </div>
 
+                      <small className=" text-center leading-5 text-letter-grey dark:text-gray-400">
+                        Niveau d'expérience : {post.niveau}
+                      </small>
+                      <br></br>
+                      <small className=" text-center leading-5 text-letter-grey dark:text-gray-400">
+                        Durée de la mission : {post.durée}
+                      </small>
+
+                      <br></br>
+
+                      <br></br>
                       {/* Description */}
-                      <small className=" text-center leading-5 text-letter-orange dark:text-gray-400">
-                        Expert -freelancer.niveaudexperience-
+                      <small className=" text-center leading-5 text-letter-grey dark:text-gray-400">
                         {post.description}
                       </small>
                     </figcaption>
@@ -81,9 +99,8 @@ const FreelancerCard = () => {
           </div>
         </section>
       </section>
-      FreelancerCard
     </div>
   );
 };
 
-export default FreelancerCard;
+export default AnnonceCard;
