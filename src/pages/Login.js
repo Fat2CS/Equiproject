@@ -51,7 +51,7 @@ function Login() {
 			const querySnapshot = await getDocs(
 				query(
 					collection(db, "User"),
-					where("userId", "==", "Fq3Hd1jNXONleZyW85pKzR8zqeB3")
+					where("userId", "==", userId)
 				)
 			);
 
