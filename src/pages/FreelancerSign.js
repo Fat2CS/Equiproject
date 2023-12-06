@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/router";
