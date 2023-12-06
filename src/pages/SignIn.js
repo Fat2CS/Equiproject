@@ -1,9 +1,15 @@
+"use client";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/router";
+import NextLink from "next/link";
+import { addDoc, collection } from "firebase/firestore";
+import Link from "next/link";
+
+// import {useNavigation} from 'next/navigation';
+// import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useRef } from "react";
-import { useFirebase } from "@/firebase";
-import NextImage from "next/image";
-import { addDoc, collection } from "firebase/firestore";
+import { auth, db } from "../firebase";
 
 export default function SignIn() {
   const router = useRouter();
@@ -11,7 +17,6 @@ export default function SignIn() {
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
   const type = "Professionnel";
-  const firebase = useFirebase();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -26,8 +31,6 @@ export default function SignIn() {
     }
 
     try {
-      firebase;
-
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -42,6 +45,11 @@ export default function SignIn() {
         type: type
       });
 
+      const ref = await addDoc(collection(db, "User"), {
+        userId: userId,
+        docref: docref.id
+      });
+
       console.log("Document utilisateur créé avec succès." + docref.id);
       router.push(`./ProfilCreate/${docref.id}`);
     } catch (error) {
@@ -51,18 +59,46 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex min-h-full flex-1 flex-col px-6 py-12 lg:px-2 lg:flex-row">
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <div className="mx-auto text-center w-1/2 lg:mx-0 lg:mr-8 lg:relative lg:right-8">
-          <NextImage
-            width={217}
-            height={217}
-            sizes="20vw"
-            src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1699865791/EQUINTERIM/eliunvkjpis02zzppvwo.png"
-            alt="Your Company"
-          />
+    <div className="flex min-h-full flex-1 flex-col  px-6 py-8 lg:px-20 lg:m-0 lg:flex-row ">
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
+        <div className=" mx-auto text-center w-1/2 lg:mx-0 lg:mr-8 lg:relative lg:right-8 ">
+          <Link href={"/"}>
+            <Image
+              width={100}
+              height={100}
+              sizes="20vw"
+              src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1700827173/EQUINTERIM/bvofggf7jwc5wptxilbn.png"
+              alt="Your Company"
+            />
+          </Link>
         </div>
-        <form onSubmit={handleSignIn} className="space-y-6 lg:ml-4">
+        <div>
+          <div className=" px-2 textHero  top-11 md:px-0 mt-8 text-center md:text-start">
+            <div className="text-letter-grey font-bold "></div>
+            <div>
+              <div
+                className="flex ml-2 m-6 
+            "
+              >
+                <div className="squareorange bg-letter-orange text-letter-grey font-bold text-sm px-1 md:text-lg md:w-18 py-2 text-center md:text-start">
+                  Renseignez
+                </div>
+                <div className=" squareblack bg-black-button bg-opacity-80 font-bold text-letter-grey rounded-e-2xl px-2 text-sm md:text-lg md:pr-20 py-2 ">
+                  vos informations
+                </div>
+              </div>
+              <div className="flex ml-2 ">
+                <div className="squareorange bg-letter-orange text-letter-grey font-bold text-sm px-1 md:text-lg md:w-18 py-2  ">
+                  Faites
+                </div>
+                <div className=" squareblack bg-black-button bg-opacity-80 font-bold text-letter-grey rounded-e-2xl px-2 text-sm md:text-lg md:pr-20 py-2 ">
+                  galoper vos opportunités professionnelles
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <form onSubmit={handleSignIn} className="space-y-6 lg:ml-4 mt-5">
           <div>
             <label
               htmlFor="email"
@@ -78,7 +114,7 @@ export default function SignIn() {
                 autoComplete="email"
                 required
                 ref={emailRef}
-                className="block w-full rounded-full border-0 py-3.5 px-4 text-letter-grey focus:ring-letter-orange-600 focus:bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button"
+                className=" block w-full rounded-full border  py-3.5 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button "
               />
             </div>
           </div>
@@ -101,10 +137,10 @@ export default function SignIn() {
                 ref={passwordRef}
                 autoComplete="current-password"
                 required
-                className="block w-full rounded-full border-0 py-3.5 px-2 text-letter-grey shadow-sm ring-1 ring-inset ring-letter-grey-300 placeholder-letter-grey focus:ring-2 focus:ring-inset focus:ring-letter-orange-600 sm:text-sm sm:leading-6"
+                className=" block w-full rounded-full border  py-3.5 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button "
               />
             </div>
-            <div>
+            <div className="mt-5">
               <label
                 htmlFor="confirmPassword"
                 className="block text-sm font-medium leading-6 text-letter-grey"
@@ -119,7 +155,7 @@ export default function SignIn() {
                   ref={confirmPasswordRef}
                   autoComplete="current-password"
                   required
-                  className="block w-full rounded-full border-0 py-3.5 px-2 text-letter-grey shadow-sm ring-1 ring-inset ring-letter-grey-300 placeholder-letter-grey focus:ring-2 focus:ring-inset focus:ring-letter-orange-600 sm:text-sm sm:leading-6"
+                  className=" block w-full rounded-full border  py-3.5 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button "
                 />
               </div>
             </div>
@@ -152,24 +188,24 @@ export default function SignIn() {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-full bg-letter-orange px-3 py-3.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-letter-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-letter-orange-600"
+              className="flex w-full justify-center rounded-full bg-letter-orange px-3 py-3.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-letter-orange-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-letter-orange-600"
             >
               Inscription
             </button>
           </div>
         </form>
+        ;
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <div className="mx-auto text-center w-1/2">
-          <NextImage
-            width={217}
-            height={217}
-            sizes="20vw"
-            src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1699865791/EQUINTERIM/eliunvkjpis02zzppvwo.png"
-            alt="Your Company"
-          />
-        </div>
+      <div className="py-20 lg:ml-20 lg:mt-20 sm:w-full mx-auto mt-5 text-center lg:px-10  ">
+        <Image
+          className=" lg:mt-20 rounded-full object-cover"
+          width={517}
+          height={517}
+          sizes="50vw"
+          src="https://res.cloudinary.com/dgkp7pkly/image/upload/v1700832878/EQUINTERIM/t3fd8t7psbvnmreezlib.png"
+          alt="Your Company"
+        />
       </div>
     </div>
   );

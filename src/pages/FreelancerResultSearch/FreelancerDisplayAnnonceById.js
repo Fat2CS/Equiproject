@@ -16,9 +16,9 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import Link from "next/link";
 
 import { FaPencil } from "react-icons/fa6";
-import AnnonceById from "../../components/FreelancerSearchById";
+import AnnonceById from "../../components/AnnonceById";
 
-const FreelanceCardbyid = () => {
+const FreelancerDisplayAnnonceById = () => {
   const router = useRouter();
   const [userData, setUserData] = useState(null);
   const [available, setAvailable] = useState(true);
@@ -183,4 +183,4 @@ const FreelanceCardbyid = () => {
   );
 };
 
-export default FreelanceCardbyid;
+export default FreelancerDisplayAnnonceById;
