@@ -26,11 +26,11 @@ const FreelancerSearchById = () => {
           </div>
         </div>
 
-        <div className=" flex justify-between text-letter-grey w-full md:w-2/3 bg-black-button p-4 shadow  border-border-black-button ">
+        <div className="flex justify-between text-letter-grey w-full md:w-2/3 bg-black-button rounded-lg p-4 shadow  border-border-black-button ">
           {/* sous la photo */}
 
           <div className="textfirstcontainer  mt-3">
-            <h1 className="sm:text-base lg:text:oxl mb-3">userData.name</h1>
+            <h1 className="sm:text-base lg:text-oxl mb-3">userData.name</h1>
 
             <h2 className="mb-3">Avis</h2>
           </div>

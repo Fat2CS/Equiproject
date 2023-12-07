@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Image from "next/image";
 import { AiFillEnvironment } from "react-icons/ai";
@@ -10,6 +11,8 @@ import Link from "next/link";
 import AnnonceCard from "@/components/AnnonceCard";
 import FreeNavbar from "@/components/FreeNavbar";
 import FreeNavbarW from "@/components/FreeNavbarW";
+import Pronavbar from "@/components/Pronavbar";
+import FreelancerCard from "@/components/FreelancerCard";
 export default function FreelancerResultSearch() {
   const [posts, setPosts] = useState([
     // Remplacez ceci par votre propre tableau de données
@@ -37,10 +40,14 @@ export default function FreelancerResultSearch() {
       <div className="bg-black-buttonshadow w-full p-2  flex items-center justify-between flex-row md:text-base md:hidden"></div>
 
       <div className=" md:flex md:flex-row">
-        <FreeNavbar />
-        <FreeNavbarW />
+        {/* <FreeNavbar />
+        <FreeNavbarW /> */}
+<div className="mt-5">
+     <Pronavbar />
+</div>
+       
 
-        <AnnonceCard />
+        <FreelancerCard/>
       </div>
     </>
   );

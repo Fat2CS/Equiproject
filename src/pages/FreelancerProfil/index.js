@@ -16,6 +16,9 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import Link from "next/link";
 
 import { FaPencil } from "react-icons/fa6";
+import FreeNavbar from "../../components/FreeNavbar";
+
+import FreeNavbarW from "../../components/FreeNavbarW";
 
 const FreelancerProfil = () => {
   const router = useRouter();
@@ -65,114 +68,13 @@ const FreelancerProfil = () => {
       </div>
       <div className="bg-black-buttonshadow w-full p-2  flex items-center justify-between flex-row md:text-base md:hidden">
         {/* ... */}
-        <nav className="flex items-center space-x-16 justify-around m-auto">
-          {/* <Link href={`/Message/{${id}`}>
-            <div className="items-center space-x-4 text-letter-grey">
-              <PiEnvelopeThin className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-            </div>{" "}
-          </Link> */}
-          
-          <Link href="/FindMission">
-            <div className=" items-center space-x-4 text-letter-grey">
-              <FaMagnifyingGlass className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-            </div>
-          </Link>
-          <Link href="/ProfilPro">
-            <div className=" items-center space-x-4 text-letter-grey">
-              <PiNewspaperClippingLight className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-            </div>{" "}
-          </Link>
-          <Link href="/ProfilPro">
-            <div className=" items-center space-x-4 text-letter-grey">
-              <BsPersonWorkspace className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-            </div>{" "}
-          </Link>
-          <Link href={"/CreateAnnonce/"}>
-            <div className=" items-center space-x-4 text-letter-grey">
-              <RiLogoutCircleRLine className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-            </div>
-          </Link>
-        </nav>
+        <FreeNavbar />
       </div>
 
       {/* Contenu principal */}
       <div className="flex-1 flex flex-wrap">
         {/* Barre latérale de navigation */}
-        <div
-          className="p-2 bg-black-button w-full md:w-60 flex-col md:flex hidden"
-          id="sideNav"
-        >
-          <nav>
-            <Link href={""}>
-              <div className="flex ml-2 mt-9">
-                <div>
-                  <PiEnvelopeThin className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-                </div>
-                <div>
-                  <ul className="flex items-center space-x-4 text-letter-grey">
-                    {" "}
-                    Message{" "}
-                  </ul>
-                </div>
-              </div>{" "}
-            </Link>
-            <Link href={"/FindMission"}>
-              <div className="flex ml-2 mt-9">
-                <div>
-                  <FaMagnifyingGlass className="text-letter-orange mt-1 mr-2" />
-                </div>
-                <div>
-                  <ul className="flex items-center space-x-4 text-letter-grey">
-                    {" "}
-                    Trouver une mission{" "}
-                  </ul>
-                </div>
-              </div>{" "}
-            </Link>
-
-            <Link href="/ProfilPro">
-              <div className="flex ml-2 mt-9">
-                <div>
-                  <PiNewspaperClippingLight className="text-letter-orange mt-1 mr-2" />
-                </div>
-                <div>
-                  <ul className="flex items-center space-x-4 text-letter-grey">
-                    {" "}
-                    Suivre mes candidatures{" "}
-                  </ul>
-                </div>
-              </div>{" "}
-            </Link>
-            {/* <Link href={""}>
-              <div className="flex ml-2 mt-9">
-                <div>
-                  <BsPersonWorkspace className="text-letter-orange mt-1 mr-2" />
-                </div>
-                <div>
-                  <ul className="flex items-center space-x-4 text-letter-grey">
-                    Déposer une annonce{" "}
-                  </ul>
-                </div>
-              </div>{" "}
-            </Link> */}
-            <Link href="/ProfilPro">
-              <div className="flex ml-2 my-10">
-                <div>
-                  <RiLogoutCircleRLine className="text-letter-orange mt-1 mr-2" />
-                </div>
-
-                <div>
-                  <ul className="flex items-center space-x-4 text-letter-grey">
-                    {" "}
-                    Déconnecter{" "}
-                  </ul>
-                </div>
-              </div>{" "}
-            </Link>
-          </nav>
-
-          {/* ... */}
-        </div>
+        <FreeNavbarW />
 
         {/* Zone de contenu principal */}
         <div className="flex-1 p-4 w-full ">
@@ -241,38 +143,40 @@ const FreelancerProfil = () => {
                 <span></span>
               </div>
 
-<div className="mt-5"><span
-                className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
+              <div className="mt-5">
+                <span
+                  className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
                      mb-4
                     "
-              >
-                {" "}
-                Éxpériences
-              </span></div>
-              
-              <div className="w-full  mt-5  bg-black-button border border-border-black-button p-4 shadow rounded-lg  text-letter-grey overflow-y-auto">
-                
-            <div className="flex justify-end">
-              <FaPencil className="text-letter-orange mt-1 mr-2" />
-            </div>
-            <h1>Expériences </h1>
-            <h1>userData.level</h1>
-            <span>Décris toi en quelques mots </span>
-          </div>
-            </div>
-          </div>
+                >
+                  {" "}
+                  Éxpériences
+                </span>
+              </div>
 
+              <div className="w-full  mt-5  bg-black-button border border-border-black-button p-4 shadow rounded-lg  text-letter-grey overflow-y-auto">
+                <div className="flex justify-end">
+                  <FaPencil className="text-letter-orange mt-1 mr-2" />
+                </div>
+                <h1>Expériences </h1>
+                <h1>userData.level</h1>
+                <span>Décris toi en quelques mots </span>
+              </div>
+            </div>
+          </div>
 
           {/* Troisième conteneur - Tableau des autorisations en attente */}
 
-          <div className="mt-5"><span
-                className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
+          <div className="mt-5">
+            <span
+              className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
                      mb-4
                     "
-              >
-                {" "}
-                Candidatures
-              </span></div>
+            >
+              {" "}
+              Candidatures
+            </span>
+          </div>
           <div className=" h-40vh md:flex  md:space-x-10 md:text-center mt-5 bg-black-button border border-border-black-button p-4 shadow rounded-lg text-letter-grey m-auto ">
             <div className=" sm:text-basemd:mt-5">
               {" "}
@@ -298,15 +202,17 @@ const FreelancerProfil = () => {
           </div>
 
           {/* Quatrième conteneur - Tableau des transactions */}
-          <div className="mt-5"><span
-                className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
+          <div className="mt-5">
+            <span
+              className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
                      mb-4
                     "
-              >
-                {" "}
-                Avis
-              </span></div>
-          
+            >
+              {" "}
+              Avis
+            </span>
+          </div>
+
           <div className="mt-8 border border-border-black-button bg-black-button p-4 shadow rounded-lg text-letter-grey">
             <span>Avis </span>
             <div>

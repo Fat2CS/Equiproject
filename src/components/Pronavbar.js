@@ -20,12 +20,10 @@ const Pronavbar = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-black-body m-auto mt-4">
+    <div className="">
       {/* Barre de navigation supérieure */}
 
-      <div className="text-letter-orange ml-3 mb-3">
-        <h1>Bienvenue Mimi, </h1>
-      </div>
+      
       <div className="bg-black-buttonshadow w-full p-2  flex items-center justify-between flex-row md:text-base md:hidden">
         {/* ... */}
 
@@ -59,7 +57,7 @@ const Pronavbar = () => {
       </div>
 
       {/* Contenu principal */}
-      <div className="flex-1 flex flex-wrap">
+      
         {/* Barre latérale de navigation */}
         <div
           className="p-2 bg-black-button w-full md:w-60 flex-col md:flex hidden"
@@ -138,7 +136,7 @@ const Pronavbar = () => {
           </nav>
         </div>
       </div>
-    </div>
+   
   );
 };
 
