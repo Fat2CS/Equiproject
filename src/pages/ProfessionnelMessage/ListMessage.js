@@ -67,7 +67,7 @@ const ListMessage = () => {
       <div className="flex-1 flex flex-wrap">
         {/* Barre latérale de navigation */}
         <div
-          className="p-2 bg-black-button w-full md:w-60 flex-col md:flex hidden"
+          className="p-2 bg-black-button w-full md:w-60 flex-col md:flex hidden rounded-xl"
           id="sideNav"
         >
           <nav>
@@ -143,19 +143,19 @@ const ListMessage = () => {
           </nav>
         </div>
 
-        <div className=" text-letter-grey flex-1 p-4 w-full ">
+        <div className=" text-letter-grey flex-1 p-4 w-full  ">
           {/* Champ de recherche */}
           <div className="space-y-5">
-            <div className="border-b border-b-gray-200">
+            <div className="">
               <ul className="-mb-px flex items-center gap-4 text-sm font-medium">
                 {/* Add more menu items as needed */}
               </ul>
             </div>
             <div>
               {/* Render messages as a table */}
-              <table className=" text-letter-orange w-full border border-gray-200 rounded-xl overflow-hidden ">
-                <thead className="bg-black-button">
-                  <tr>
+              <table className=" text-letter-orange w-full  rounded-xl overflow-hidden ">
+                <thead className="bg-gray-100  ">
+                  <tr className="h-4">
                     <th className="py-2 px-4 border-b">Date</th>
                     <th className="py-2 px-4 border-b">User</th>
                     <th className="py-2 px-4 border-b">Message</th>
@@ -167,15 +167,9 @@ const ListMessage = () => {
                       key={index}
                       className={index % 2 === 0 ? "bg-gray-100" : ""}
                     >
-                      <td className="text-center py-2 px-4 border-b">
-                        {msg.date}
-                      </td>
-                      <td className=" text-center py-2 px-4 border-b">
-                        {msg.user}
-                      </td>
-                      <td className=" text-center py-2 px-4 border-b">
-                        {msg.message}
-                      </td>
+                      <td className="text-center py-2 px-4">{msg.date}</td>
+                      <td className=" text-center py-2 px-4">{msg.user}</td>
+                      <td className=" text-center py-2 px-4">{msg.message}</td>
                     </tr>
                   ))}
                 </tbody>
