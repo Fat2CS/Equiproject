@@ -49,7 +49,7 @@ export default function FreelancerSign() {
       const userId = userCredential.user.uid;
       console.log("Compte créé avec succès. ID de l'utilisateur:", userId);
       // Créer un document pour l'utilisateur dans Firestore avec les propriétés initiales
-      await addDoc(collection(db, "Freelancer"), {
+      const docref=await addDoc(collection(db, "Freelancer"), {
         userId: userId,
         email: email,
         type: type,
@@ -60,8 +60,13 @@ export default function FreelancerSign() {
         // ... Autres propriétés initiales ...
       });
 
+    const ref = await addDoc(collection(db, "FreelancerUser"), {
+			userId: userId,
+			docref: docref.id,
+		});
+
       console.log("Document utilisateur créé avec succès.");
-      router.push("./FreelancerProfil");
+      router.push(`./FreelancerProfil/${docref.id}`);
     } catch (error) {
       // Gérer les erreurs d'inscription
       console.error("Error during signup:", error.message);

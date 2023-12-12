@@ -25,10 +25,10 @@ const Footer = () => {
             </a>
 
             <div className=" py-5 text-gray-500  dark:hover:text-white">
-              <span> Nous contacter</span>
+              <span className="mb-3"> Nous contacter</span>
              
 
-              <div className="flex mt-4 space-x-5 sm:justify-center sm:mt-0 md:justify-start">
+              <div className="  flex mt-5 space-x-5 sm:justify-center sm:mt-0 md:justify-start">
                 <a href="#" className="text-gray-900 hover:text-white">
                   <div>
                     <FaFacebook className="w-5 h-5 bg-letter-orange" />{" "}

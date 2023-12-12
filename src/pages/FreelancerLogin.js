@@ -35,8 +35,7 @@ function Login() {
 				const user = userCredential.user;
 				console.log(user.uid);
 				alert("login succefull");
-				localStorage.setItem("senderID", user.uid);
-				router.push(`/ProfilPro/${user.uid}`);
+				fetchDocId(user.uid);
 			})
 			.catch((error) => {
 				const errorCode = error.code;
@@ -45,7 +44,29 @@ function Login() {
 			});
 	};
 
-	
+	async function fetchDocId(userId) {
+		try {
+			// Crée une référence à la collection "User" et exécute une requête où le champ "userId" correspond à la valeur recherchée
+			const querySnapshot = await getDocs(
+				query(collection(db, "FreelancerUser"), where("userId", "==", userId))
+			);
+
+			// Vérifie si des documents correspondant à la requête existent
+			if (!querySnapshot.empty) {
+				querySnapshot.forEach((doc) => {
+					let docRef = doc.data().docref;
+					router.push(`/FreelancerProfil/${docRef}`);
+
+					// Utilise doc.id pour obtenir l'ID du document si nécessaire
+				});
+			} else {
+				// Gère le cas où aucun document ne correspond à la requête
+				console.error("No matching documents");
+			}
+		} catch (error) {
+			console.error("Error fetching user data:", error);
+		}
+	}
 
 	return (
 		<div className="flex min-h-full flex-1 flex-col  px-6 py-12 lg:px-2 lg:flex-row">

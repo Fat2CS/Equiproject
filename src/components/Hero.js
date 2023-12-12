@@ -48,14 +48,14 @@ const Hero = () => {
         </div>
         <div className=" ml-3 signButton mt-6 flex space-x-10  ">
           <div>
-            <Link href={"/SignIn"}>
-            <button class="bg-letter-orange bg-opacity-80 text-letter-grey border  hover:bg-letter-grey hover:text-black-body font-bold py-2 px-4 rounded-full">
+            <Link href={"/BeforeLog"}>
+            <button className="bg-letter-orange bg-opacity-80 text-letter-grey border  hover:bg-letter-grey hover:text-black-body font-bold py-2 px-4 rounded-full">
               Créer mon compte
             </button></Link>
           </div>
           <div>
             <Link href={"/Login"}>
-              <button class="bg-black-button bg-opacity-80 text-letter-grey border hover:bg-letter-grey  font-bold py-2 px-4 rounded-full">
+              <button className="bg-black-button bg-opacity-80 text-letter-grey border hover:bg-letter-grey  font-bold py-2 px-4 rounded-full">
                 Me connecter
               </button>
             </Link>
@@ -170,8 +170,8 @@ const Hero = () => {
               dans leur domaine et poster un annonce gratuitement !
             </span>
             <div className="text-center ">
-              <Link href={"/SignIn"}>
-              <button class="bg-letter-orange  text-letter-grey border hover:bg-letter-grey hover:text-black-body font-bold py-4 px-4 rounded-full mt-9 ">
+              <Link href={"/BeforeLog"}>
+              <button className="bg-letter-orange  text-letter-grey border hover:bg-letter-grey hover:text-black-body font-bold py-4 px-4 rounded-full mt-9 ">
                 Je crée mon compte
               </button>
               </Link>
@@ -186,8 +186,8 @@ const Hero = () => {
             </span>
             <div className="text-center">
 
-              <Link href={"/Login"}>
-              <button class="bg-letter-orange  text-letter-grey border  hover:bg-letter-grey hover:text-black-body font-bold py-4 px-7 rounded-full mt-9 ">
+              <Link href={"/BeforeLog"}>
+              <button className="bg-letter-orange  text-letter-grey border  hover:bg-letter-grey hover:text-black-body font-bold py-4 px-7 rounded-full mt-9 ">
                 Je m'inscris
               </button>
               </Link>

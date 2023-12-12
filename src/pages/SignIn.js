@@ -2,7 +2,7 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
-import { addDoc, collection } from "firebase/firestore";
+import { doc,setDoc,addDoc, collection } from "firebase/firestore";
 import Link from "next/link";
 
 // import {useNavigation} from 'next/navigation';
@@ -39,19 +39,16 @@ export default function SignIn() {
       const userId = userCredential.user.uid;
       console.log("Compte créé avec succès. ID de l'utilisateur:", userId);
       // Créer un document pour l'utilisateur dans Firestore avec les propriétés initiales
-      const docref=await addDoc(collection(db, "Professional"), {
-        userId: userId,
-        email: email,
-        type: type
-      });
+      
 
-      const ref=await addDoc(collection(db, "User"), {
-        userId: userId,
-        docref: docref.id,
-      });
+     await setDoc(doc(db, "Professional", userId), {
+				userId: userId,
+				email: email,
+				type: type,
+			});
 
-      console.log("Document utilisateur créé avec succès."+docref.id);
-      router.push(`./ProfilCreate/${docref.id}`);
+      console.log("Document utilisateur créé avec succès."+userId);
+      router.push(`./ProfilCreate/${userId}`);
     } catch (error) {
       // Gérer les erreurs d'inscription
       console.error("Error during signup:", error.message);

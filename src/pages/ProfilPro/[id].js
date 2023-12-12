@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { getDoc, doc, getDocs, collection } from "firebase/firestore";
 import { useRouter } from "next/router";
-import { db } from "../../firebase";
+import { db, storage } from "../../firebase";
 
 // icons
 import { PiEnvelopeThin } from "react-icons/pi";
@@ -14,24 +14,57 @@ import { BsPersonWorkspace } from "react-icons/bs";
 import { MdPostAdd } from "react-icons/md";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import Link from "next/link";
+import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 
 const ProfilPro = ({ params }) => {
 	const router = useRouter();
 	const [userData, setUserData] = useState(null);
 	const [userId, setUserId] = useState(null);
+	const [uploadImage, setUploadImage] = useState(null);
+	const [imageList, setImageList] = useState([]);
+	const [profileImage, setProfileImage] = useState(null);
+	const imageListRef = ref(storage, "images/");
 
 	useEffect(() => {
-		// Extrait l'ID de l'URL
-		const { id } = router.query;
-		if (id) {
-			setUserId(id);
-			fetchDataFromFirestore(id);
+		
+		if (router.isReady) {
+			const { id } = router.query;
+			if (id !== undefined) {
+				setUserId(id);
+				listAll(imageListRef).then((response) => {
+					response.items.forEach((image) => {
+						const fileName = image._location.path_;
+						const id_part = fileName.split("_");
+						if (id_part[1] === id) {
+													console.log(id_part[1], id);
+							getDownloadURL(image).then((url) => {
+								setProfileImage(url);
+								//	console.log(url);
+							});
+						}
+					});
+				});
+				fetchDataFromFirestore(id);
+			}
 		}
-	}, []);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	
+}, [router.isReady, router.query,profileImage,imageListRef,imageList]);
+
+const handleImageUpload = () => {
+	if (uploadImage == null) {
+		alert("Please select an image to upload");
+		return;
+	}
+	const imageRef = ref(storage, `images/${uploadImage.name + "_" + userId}`);
+	uploadBytes(imageRef, uploadImage).then(() => {
+		alert("Image uploaded");
+	});
+};
 
 	async function fetchDataFromFirestore(userId) {
 		try {
-			// Obtient la référence du document pour l'utilisateur
+			
 			const userDocRef = doc(db, "Professional", userId);
 
 			// Obtient les données du document
@@ -101,7 +134,7 @@ const ProfilPro = ({ params }) => {
 					id="sideNav"
 				>
 					<nav>
-						<Link href={`/Message/{${userId}`}>
+						<Link href={`/FreelancerMessage/ChatMessage/${userId}`}>
 							<div className="flex ml-2 mt-9">
 								<div>
 									<PiEnvelopeThin className="text-letter-orange mt-1 mr-2 w-5 h-5" />
@@ -175,8 +208,32 @@ const ProfilPro = ({ params }) => {
 				{/* Zone de contenu principal */}
 				<div className="flex-1 p-4 w-full ">
 					{/* Champ de recherche */}
+					<button
+						onClick={handleImageUpload}
+						style={{
+							backgroundColor: "orange",
+							color: "white",
+							fontWeight: "bold",
+							padding: "0.5rem",
+							borderRadius: "0.2rem",
+						}}
+					>
+						Upload Image
+					</button>
+					<input
+						type="file"
+						onChange={(event) => {
+							setUploadImage(event.target.files[0]);
+						}}
+						style={{ padding: "0.2rem" }}
+					/>
+
 					<div className="md:relative md:w-1/3 ">
-						<div className="profil rounded-full picture w-40 h-40 bg-letter-orange m-auto  "></div>
+						{profileImage ? (
+							<img src={profileImage} />
+						) : (
+							<div className="profil rounded-full picture w-40 h-40 bg-letter-orange m-auto  "></div>
+						)}
 
 						<div className="text-letter-grey text-center text-lg mt-4">
 							<h1>{userData.name}</h1>
