@@ -46,7 +46,7 @@ export default function SignIn() {
 				email: email,
 				type: type,
 			});
-
+      localStorage.setItem("senderID", user.uid);
       console.log("Document utilisateur créé avec succès."+userId);
       router.push(`./ProfilCreate/${userId}`);
     } catch (error) {

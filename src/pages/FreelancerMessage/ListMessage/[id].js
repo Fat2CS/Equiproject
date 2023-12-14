@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { getDoc, doc, getDocs, collection } from "firebase/firestore";
 import { useRouter } from "next/router";
-import { db } from "../../../firebase";
+import { db, storage } from "@/firebase";
 
 // icons
 import { PiEnvelopeThin } from "react-icons/pi";
@@ -14,56 +14,87 @@ import { BsPersonWorkspace } from "react-icons/bs";
 import { MdPostAdd } from "react-icons/md";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import Link from "next/link";
-import Chat from "/src/components/Chat";
-import { FaPencil } from "react-icons/fa6";
 
-const ChatMessage = () => {
+const ListMessage = () => {
+	const [userIDS, setUserIDS] = useState([]);
+	const [userData, setUserData] = useState([]);
+	const messages = [
+		{
+			date: "2023-01-01",
+			user: "John Doe",
+			message: "Hello, how are you?",
+		},
+		// Add more messages as needed
+	];
+	const router = useRouter();
 
-    // const [message, setMessage] = useState("");   
-  const router = useRouter();
-  const [messagesData, setMessagesData] = useState(null);
-  const [ReceiverID, setReceiverID] = useState(null);
-  const [SenderID, setSenderID] = useState(null);
-  const [available, setAvailable] = useState(true);
-  
-  useEffect(() => {
-		if (router.isReady) {
-			const { id } = router.query;
-			if (id !== undefined) {
-				setReceiverID(id);
-        const senderID=localStorage.getItem("senderID");
-        setSenderID(senderID);
-        fetchDataFromFirestore(senderID,id);
+	// const [message, setMessage] = useState("");
+	// Assuming you are using Next.js dynamic routing
+	useEffect(() => {
+		const { id } = router.query;
+		const fetchMessages = async () => {
+			try {
+				const messagesRef = collection(db, "Messages");
+				const querySnapshot = await getDocs(messagesRef);
+
+				querySnapshot.forEach((doc) => {
+					// Access individual document data here
+					let messID = doc.id.split("_");
+					if (id == messID[0]) {
+						console.log("Document ID:", messID[1]);
+						setUserIDS((userIDS) => [...userIDS, messID[1]]);
+					} else if (id == messID[1]) {
+						setUserIDS((userIDS) => [...userIDS, messID[0]]);
+					}
+					console.log("Document data:", doc.data());
+					// Perform actions with each document's data as needed
+				});
+			} catch (error) {
+				console.error("Error fetching messages:", error);
 			}
+		};
+
+		fetchMessages();
+		fetchDataFromFirestore();
+	}, [router.isReady, router.query]);
+
+	useEffect(() => {
+		if (userIDS.length != 0) {
+			console.log(userData);
 		}
-	}, [router.isReady, router.query,SenderID,ReceiverID]);
-  
-	
+	}, [userIDS]);
 
-  async function fetchDataFromFirestore(senderId,receiverID) {
-    try {
-      console.log(senderId,receiverID);
-      const messageDocRef = doc(db, "Messages", senderId+'_'+receiverID);
+	const [available, setAvailable] = useState(true);
 
-      // Obtient les données du document
-      const messageDocSnap = await getDoc(messageDocRef);
+	async function fetchDataFromFirestore() {
+		try {
+			console.log(userIDS)
+			for (const userId of userIDS) {
+				console.log('USER ID: '+userId);
+				const userDocRef = doc(db, "Professional", userId);
+				const userDocSnap = await getDoc(userDocRef);
 
-      // Vérifie si le document existe
-      if (messageDocSnap.exists()) {
-        const messagesData = messageDocSnap.data();
-        setMessagesData(messagesData);
-      } else {
-        // Gère le cas où le document n'existe pas
-        console.error("Document not found");
-      }
-    } catch (error) {
-      console.error("Error fetching message data:", error);
-    }
-  }
+				if (userDocSnap.exists()) {
+					const userData = userDocSnap.data();
+					setUserData((prevUserData) => [...prevUserData, userData]);
+				} else {
+					const freelancerDocRef = doc(db, "Freelancer", userId);
+					const freelancerDocSnap = await getDoc(freelancerDocRef);
+					if (freelancerDocSnap.exists()) {
+						const userData = freelancerDocSnap.data();
+						setUserData((prevUserData) => [...prevUserData, userData]);
+					} else {
+						console.log("User with this id not found!");
+					}
+				}
+			}
+			console.log('here');
+		} catch (error) {
+			console.error("Error fetching user data:", error);
+		}
+	}
 
- 
-
-  return (
+	return (
 		<div className="flex flex-col h-screen bg-black-body">
 			{/* Barre de navigation supérieure */}
 
@@ -110,7 +141,7 @@ const ChatMessage = () => {
 					id="sideNav"
 				>
 					<nav>
-						<Link href={`/FreelancerMessage/ListMessage/${SenderID}`}>
+						<Link href={""}>
 							<div className="flex ml-2 mt-9">
 								<div>
 									<PiEnvelopeThin className="text-letter-orange mt-1 mr-2 w-5 h-5" />
@@ -171,25 +202,49 @@ const ChatMessage = () => {
 				</div>
 
 				{/* Zone de contenu principal */}
-				<div className="flex-1 p-4 w-full ">
+				<div className=" text-letter-grey flex-1 p-4 w-full ">
 					{/* Champ de recherche */}
-					<div className=" md:w-full py-15 ">
-						{SenderID != null && ReceiverID != null && (
-							<Chat
-								messages={messagesData}
-								senderID={SenderID}
-								receiverID={ReceiverID}
-							/>
-						)}
+					<div className="space-y-5">
+						<div className="border-b border-b-gray-200">
+							<ul className="-mb-px flex items-center gap-4 text-sm font-medium">
+								{/* Add more menu items as needed */}
+							</ul>
+						</div>
+						<div>
+							{/* Render messages as a table */}
+							<table className=" text-letter-orange w-full border border-gray-200 rounded-xl overflow-hidden">
+								<thead className="bg-black-button">
+									<tr>
+										<th className="py-2 px-4 border-b">Date</th>
+										<th className="py-2 px-4 border-b">User</th>
+										<th className="py-2 px-4 border-b">Message</th>
+									</tr>
+								</thead>
+								<tbody>
+									{messages.map((msg, index) => (
+										<tr
+											key={index}
+											className={index % 2 === 0 ? "bg-gray-100" : ""}
+										>
+											<td className=" text-center py-2 px-4 border-b">
+												{msg.email}
+											</td>
+											<td className=" text-center py-2 px-4 border-b">
+												{'Kaleem'}
+											</td>
+											<td className=" text-center py-2 px-4 border-b">
+												{'test'}
+											</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
 					</div>
-
-					{/* Conteneur de graphiques */}
-
-					{/* Quatrième conteneur - Tableau des transactions */}
 				</div>
 			</div>
 		</div>
 	);
 };
 
-export default ChatMessage;
+export default ListMessage;

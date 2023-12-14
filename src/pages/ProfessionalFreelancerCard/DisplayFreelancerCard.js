@@ -17,9 +17,7 @@ import FreelancerCard from "@/components/FreelancerCard";
 export default function FreelancerResultSearch() {
 
 	const[receiverID,setReceiverID] =useState(null);
-   useEffect(()=>{
-localStorage.setItem("senderID","1234");
-   },[])
+  
 
 	return (
 		<>

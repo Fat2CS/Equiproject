@@ -138,7 +138,7 @@ const FreelancerProfil = () => {
 					id="sideNav"
 				>
 					<nav>
-						<Link href={""}>
+						<Link href={`/FreelancerMessage/ListMessage/${userId}`}>
 							<div className="flex ml-2 mt-9">
 								<div>
 									<PiEnvelopeThin className="text-letter-orange mt-1 mr-2 w-5 h-5" />

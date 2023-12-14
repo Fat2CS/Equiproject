@@ -3,7 +3,7 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/router";
 import NextLink from "next/link";
-import { addDoc, collection } from "firebase/firestore";
+import { doc,addDoc, collection,setDoc } from "firebase/firestore";
 import Link from "next/link";
 
 // import {useNavigation} from 'next/navigation';
@@ -57,16 +57,16 @@ export default function FreelancerSign() {
         username: username,
         phone: phone
 
-        // ... Autres propriétés initiales ...
       });
 
-    const ref = await addDoc(collection(db, "FreelancerUser"), {
+   await setDoc(doc(db, "Freelancer", userId), {
 			userId: userId,
-			docref: docref.id,
+			email: email,
+			type: type,
 		});
-
+     	localStorage.setItem("senderID", userId);
       console.log("Document utilisateur créé avec succès.");
-      router.push(`./FreelancerProfil/${docref.id}`);
+      router.push(`./FreelancerProfil/${userId}`);
     } catch (error) {
       // Gérer les erreurs d'inscription
       console.error("Error during signup:", error.message);
