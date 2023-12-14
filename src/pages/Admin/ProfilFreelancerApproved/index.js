@@ -61,7 +61,7 @@ const ProfilFreelancerApproved = () => {
               <div>
                 <ul className="flex items-center space-x-4 text-letter-grey">
                   {" "}
-                  Message{" "}
+                  Mon tableau de bord{" "}
                 </ul>
               </div>
             </div>{" "}

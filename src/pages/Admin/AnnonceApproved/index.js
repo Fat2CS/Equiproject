@@ -61,7 +61,7 @@ const AnnonceApproved = () => {
               <div>
                 <ul className="flex items-center space-x-4 text-letter-grey">
                   {" "}
-                  Message{" "}
+                  Mon Tableau de bord {" "}
                 </ul>
               </div>
             </div>{" "}
