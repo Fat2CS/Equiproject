@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { getDoc, doc, getDocs, collection } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { db } from "../../firebase";
-import Chat from "/src/components/Chat";
+import Chat from "../../components/Chat";
 // icons
 import { PiEnvelopeThin } from "react-icons/pi";
 
