@@ -8,7 +8,7 @@ import { doc, setDoc, getDocs, addDoc, collection } from "firebase/firestore";
 import { db, storage } from "@/firebase";
 import { useRouter } from "next/router";
 
-const FreelancerCard = ({ setReceiverID }) => {
+const SearchFreelancer = ({ setReceiverID, skill, level}) => {
 	const [posts, setFreelancerData] = useState([]);
 	const router = useRouter();
 
@@ -20,35 +20,36 @@ const FreelancerCard = ({ setReceiverID }) => {
 				console.error("Error fetching freelancer data:", error);
 			}
 		};
-
-		fetchData();
-	}, []);
+		if (skill != "" && level != "") fetchData();
+	}, [skill, level]);
 
 	async function fetchAllFreelancer() {
 		try {
-			// Create a reference to the entire "FreelancerUser" collection
 			const querySnapshot = await getDocs(collection(db, "Freelancer"));
 
-			// Check if there are documents in the collection
 			if (!querySnapshot.empty) {
 				const allDocs = [];
 
-				// Loop through each document in the collection
 				querySnapshot.forEach((doc) => {
-					// Extract the data from each document
 					const documentData = doc.data();
-					allDocs.push({ id: doc.id, data: documentData });
+					let skills = documentData.skill;
+					let Level = documentData.level;
+					const skills_arr = skills
+						.split(",")
+						.map((skill) => skill.trim().toLowerCase());
+					// console.log(skills_arr.includes(skill.toLowerCase()));
+					//console.log(Level);
+					if (skills_arr.includes(skill.toLowerCase()) && level.toLowerCase() === Level.toLowerCase()) {
+						allDocs.push({ id: doc.id, data: documentData });
+					}
 				});
 
-				// Set the state or perform actions with fetched data here
 				setFreelancerData(allDocs);
 			} else {
-				// Handle the case where there are no documents in the collection
 				console.error("No documents found in the collection");
 			}
 		} catch (error) {
 			console.error("Error fetching user data:", error);
-			// Handle the error as needed
 			throw error;
 		}
 	}
@@ -64,7 +65,9 @@ const FreelancerCard = ({ setReceiverID }) => {
 				<section className=" dark:bg-gray-900 py-10 px-12">
 					<div className="text-letter-orange">
 						{" "}
-						<span> user.job </span>
+                        {posts.length!=0 &&
+						<span> Found Matching Freelancers </span>
+}
 					</div>
 
 					{/* Card Grid */}
@@ -119,9 +122,9 @@ const FreelancerCard = ({ setReceiverID }) => {
 					</div>
 				</section>
 			</section>
-			FreelancerCard
+			SearchFreelancer
 		</div>
 	);
 };
 
-export default FreelancerCard;
+export default SearchFreelancer;
