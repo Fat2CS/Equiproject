@@ -5,7 +5,8 @@
 import React, { useEffect, useState } from "react";
 import { getDoc, doc, getDocs, collection } from "firebase/firestore";
 import { useRouter } from "next/router";
-import { db, storage } from "../../firebase";
+import { db,storage,auth } from "@/firebase";
+import { signOut } from "firebase/auth";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 // icons
 import { PiEnvelopeThin } from "react-icons/pi";
@@ -40,11 +41,9 @@ const FreelancerProfil = () => {
 					response.items.forEach((image) => {
 						const fileName = image._location.path_;
 						const id_part = fileName.split("_");
-						console.log(id_part[1], id);
 						if (id_part[1] === id) {
 							getDownloadURL(image).then((url) => {
 								setProfileImage(url);
-								console.log(url);
 							});
 						}
 					});
@@ -53,7 +52,7 @@ const FreelancerProfil = () => {
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [router.isReady, router.query,profileImage]);
+	}, [router.isReady, router.query, profileImage]);
 
 	async function fetchDataFromFirestore(userId) {
 		try {
@@ -66,7 +65,6 @@ const FreelancerProfil = () => {
 			// Vérifie si le document existe
 			if (userDocSnap.exists()) {
 				const userData = userDocSnap.data();
-				console.log(userData);
 				setUserData(userData);
 			} else {
 				// Gère le cas où le document n'existe pas
@@ -92,6 +90,17 @@ const FreelancerProfil = () => {
 			alert("Image uploaded");
 		});
 	};
+
+	 const handleSignout = async () => {
+			try {
+				await signOut(auth); // Use signOut(auth) instead of signOut()
+				localStorage.removeItem("senderID");
+				router.push("/FreelancerSign"); // Replace '/FreelancerSign' with the route you want to navigate to after sign-out
+			} catch (error) {
+				console.error("Error signing out:", error.message);
+				// Handle sign-out error if needed
+			}
+		};
 	return (
 		<div className="flex flex-col h-screen bg-black-body">
 			{/* Barre de navigation supérieure */}
@@ -164,7 +173,6 @@ const FreelancerProfil = () => {
 								</div>
 							</div>{" "}
 						</Link>
-
 						<Link href="/ProfilPro">
 							<div className="flex ml-2 mt-9">
 								<div>
@@ -178,9 +186,10 @@ const FreelancerProfil = () => {
 								</div>
 							</div>{" "}
 						</Link>
-
-						<Link href="/ProfilPro">
-							<div className="flex ml-2 my-10">
+						<div className="flex ml-2 my-10">
+							<button onClick={()=>{
+								handleSignout(userId)
+							}}>
 								<div>
 									<RiLogoutCircleRLine className="text-letter-orange mt-1 mr-2" />
 								</div>
@@ -188,11 +197,11 @@ const FreelancerProfil = () => {
 								<div>
 									<ul className="flex items-center space-x-4 text-letter-grey">
 										{" "}
-										Déconnecter{" "}
+										Logout{" "}
 									</ul>
 								</div>
-							</div>{" "}
-						</Link>
+							</button>
+						</div>{" "}
 					</nav>
 
 					{/* ... */}

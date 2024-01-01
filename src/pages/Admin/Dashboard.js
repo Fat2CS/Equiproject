@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useEffect, useState } from "react";
-
+import checkAuthState from "../checkAuth";
 import { PiEnvelopeThin } from "react-icons/pi";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { PiNewspaperClippingLight } from "react-icons/pi";
@@ -15,8 +15,8 @@ import {
 	collection,
 	deleteDoc,
 	updateDoc,
-  query,
-  where
+	query,
+	where,
 } from "firebase/firestore";
 import { db } from "@/firebase";
 
@@ -29,6 +29,11 @@ const Dashboard = () => {
 	const [freelancerCounter, setFreelancerCounter] = useState(0);
 
 	useEffect(() => {
+		checkAuthState((user) => {
+			if (!user) {
+				router.push("/SignIn"); // Redirect to login page if user is not authenticated
+			}
+		});
 		const fetchData = async () => {
 			try {
 				await fetchAllCounters();
@@ -47,14 +52,14 @@ const Dashboard = () => {
 			const querySnapshot = await getDocs(collection(db, "validationCounter"));
 
 			if (!querySnapshot.empty) {
-				const firstDoc = querySnapshot.docs[0]; 
+				const firstDoc = querySnapshot.docs[0];
 
 				if (firstDoc) {
-					const data = firstDoc.data(); 
+					const data = firstDoc.data();
 					console.log(data);
 
-					setAnnoucementCounter(data.annouces); 
-					setFreelancerCounter(data.freelancer); 
+					setAnnoucementCounter(data.annouces);
+					setFreelancerCounter(data.freelancer);
 				}
 			} else {
 				console.error("No documents found in the Counter collection");
@@ -176,7 +181,7 @@ const Dashboard = () => {
 				const { freelancer, annouces } = docSnapshot.data();
 
 				setAnnoucementCounter(annouces);
-				setFreelancerCounter(freelancer); 
+				setFreelancerCounter(freelancer);
 			} else {
 				console.error("No documents found in the validationCounter collection");
 			}
@@ -184,7 +189,6 @@ const Dashboard = () => {
 			console.error("Error updating counters:", error);
 		}
 	};
-
 
 	const handleDisapproveFreelancer = async (userId) => {
 		try {
