@@ -3,9 +3,15 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 import React, { useEffect, useState } from "react";
-import { getDoc, doc, getDocs, collection } from "firebase/firestore";
+import {
+	getDoc,
+	doc,
+	getDocs,
+	collection,
+	updateDoc,
+} from "firebase/firestore";
 import { useRouter } from "next/router";
-import { db,storage,auth } from "@/firebase";
+import { db, storage, auth } from "@/firebase";
 import { signOut } from "firebase/auth";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 // icons
@@ -91,16 +97,34 @@ const FreelancerProfil = () => {
 		});
 	};
 
-	 const handleSignout = async () => {
-			try {
-				await signOut(auth); // Use signOut(auth) instead of signOut()
-				localStorage.removeItem("senderID");
-				router.push("/FreelancerSign"); // Replace '/FreelancerSign' with the route you want to navigate to after sign-out
-			} catch (error) {
-				console.error("Error signing out:", error.message);
-				// Handle sign-out error if needed
-			}
-		};
+	const handleSignout = async () => {
+		try {
+			await signOut(auth); // Use signOut(auth) instead of signOut()
+			localStorage.removeItem("senderID");
+			router.push("/FreelancerSign"); // Replace '/FreelancerSign' with the route you want to navigate to after sign-out
+		} catch (error) {
+			console.error("Error signing out:", error.message);
+			// Handle sign-out error if needed
+		}
+	};
+
+	const handleStatusChange = async () => {
+		try {
+			const docRef = doc(db, "Freelancer", userId);
+			await updateDoc(docRef, {
+				status: !userData.status,
+			});
+
+			// Update local state after changing the status
+			setUserData((prevUserData) => ({
+				...prevUserData,
+				status: !prevUserData.status,
+			}));
+		} catch (error) {
+			console.error("Error updating status:", error);
+			// Handle the error (e.g., display a message to the user)
+		}
+	};
 	return (
 		<div className="flex flex-col h-screen bg-black-body">
 			{/* Barre de navigation supérieure */}
@@ -187,9 +211,11 @@ const FreelancerProfil = () => {
 							</div>{" "}
 						</Link>
 						<div className="flex ml-2 my-10">
-							<button onClick={()=>{
-								handleSignout(userId)
-							}}>
+							<button
+								onClick={() => {
+									handleSignout(userId);
+								}}
+							>
 								<div>
 									<RiLogoutCircleRLine className="text-letter-orange mt-1 mr-2" />
 								</div>
@@ -221,6 +247,7 @@ const FreelancerProfil = () => {
 					>
 						Upload Image
 					</button>
+
 					<input
 						type="file"
 						onChange={(event) => {
@@ -238,17 +265,21 @@ const FreelancerProfil = () => {
 
 						<div className="text-letter-grey text-center text-lg mt-4">
 							<h1>{userData.name}</h1>
-
-							<div className=" mr-8 flex justify-center">
-								{userData.name !== undefined ? (
-									<div className=" mt-3 w-5 h-5 bg-green rounded-full ">
-										{" "}
-										<span className="ml-6 mt-1 "> Disponible</span>{" "}
+							<button
+								onClick={handleStatusChange}
+								className="bg-orange text-white font-bold py-1 px-2 rounded-md"
+							>
+								Change Status
+							</button>
+							<div className="mr-8 flex justify-center">
+								{userData.status ? (
+									<div className="mt-3 w-5 h-5 bg-green rounded-full">
+										<span className="ml-6 mt-1">Available</span>
 									</div>
 								) : (
-									<div className="w-5 h-5 bg-red rounded-full ">
-										{" "}
-										non disponible
+									<div className="flex items-center">
+										<div className="w-3 h-3 bg-red rounded-full"></div>
+										<span className="ml-2 text-red">Not Available</span>
 									</div>
 								)}
 							</div>

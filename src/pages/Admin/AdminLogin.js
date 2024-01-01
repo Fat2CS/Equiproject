@@ -4,8 +4,8 @@ import Link from "next/link";
 import React, { useRef } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/router";
-import { auth,db } from "@/firebase";
-import { collection, query, where, getDoc,doc } from "firebase/firestore";
+import { auth, db } from "@/firebase";
+import { collection, query, where, getDoc, doc } from "firebase/firestore";
 
 function Login() {
 	const lEmailRef = useRef();
@@ -20,24 +20,22 @@ function Login() {
 		try {
 			const adminDocRef = doc(db, "Admin", "vdWkeg9vQlg5BITe3598");
 			const docSnapshot = await getDoc(adminDocRef);
-
+			localStorage.setItem("token","848639ebbfv937e7bxkcc93bcc");
 			if (docSnapshot.exists()) {
 				const adminData = docSnapshot.data();
-				if (adminData.password === password) {
-					signInWithEmailAndPassword(auth, email, password)
-						.then((userCredential) => {
-							const user = userCredential.user;
-							console.log(user.uid);
-							alert("Login successful");
-							localStorage.setItem("senderID", user.uid);
-							router.push(`/Admin/Dashboard`);
-						})
-						.catch((error) => {
-							alert(error.message);
-						});
-				} else {
-					alert("Incorrect password");
-				}
+				(adminData.password === password && adminData.email===email)
+					? signInWithEmailAndPassword(auth, email, password)
+							.then((userCredential) => {
+								const user = userCredential.user;
+								console.log(user.uid);
+								alert("Login successful");
+								localStorage.setItem("senderID", user.uid);
+								router.push(`/Admin/Dashboard`);
+							})
+							.catch((error) => {
+								alert(error.message);
+							})
+					: alert("Incorrect password");
 			} else {
 				alert("User not found");
 			}
