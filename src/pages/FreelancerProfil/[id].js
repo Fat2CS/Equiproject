@@ -3,9 +3,16 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 import React, { useEffect, useState } from "react";
-import { getDoc, doc, getDocs, collection } from "firebase/firestore";
+import {
+	getDoc,
+	doc,
+	getDocs,
+	collection,
+	updateDoc,
+} from "firebase/firestore";
 import { useRouter } from "next/router";
-import { db, storage } from "../../firebase";
+import { db, storage, auth } from "@/firebase";
+import { signOut } from "firebase/auth";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 // icons
 import { PiEnvelopeThin } from "react-icons/pi";
@@ -30,30 +37,28 @@ const FreelancerProfil = () => {
 
   const imageListRef = ref(storage, "images/");
 
-  useEffect(() => {
-    // Check if router is ready
-    if (router.isReady) {
-      const { id } = router.query;
-      if (id !== undefined) {
-        setUserId(id);
-        listAll(imageListRef).then((response) => {
-          response.items.forEach((image) => {
-            const fileName = image._location.path_;
-            const id_part = fileName.split("_");
-            console.log(id_part[1], id);
-            if (id_part[1] === id) {
-              getDownloadURL(image).then((url) => {
-                setProfileImage(url);
-                console.log(url);
-              });
-            }
-          });
-        });
-        fetchDataFromFirestore(id);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.isReady, router.query, profileImage]);
+	useEffect(() => {
+		// Check if router is ready
+		if (router.isReady) {
+			const { id } = router.query;
+			if (id !== undefined) {
+				setUserId(id);
+				listAll(imageListRef).then((response) => {
+					response.items.forEach((image) => {
+						const fileName = image._location.path_;
+						const id_part = fileName.split("_");
+						if (id_part[1] === id) {
+							getDownloadURL(image).then((url) => {
+								setProfileImage(url);
+							});
+						}
+					});
+				});
+				fetchDataFromFirestore(id);
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [router.isReady, router.query, profileImage]);
 
   async function fetchDataFromFirestore(userId) {
     try {
@@ -63,38 +68,66 @@ const FreelancerProfil = () => {
       // Obtient les données du document
       const userDocSnap = await getDoc(userDocRef);
 
-      // Vérifie si le document existe
-      if (userDocSnap.exists()) {
-        const userData = userDocSnap.data();
-        console.log(userData);
-        setUserData(userData);
-      } else {
-        // Gère le cas où le document n'existe pas
-        console.error("Document not found");
-      }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  }
+			// Vérifie si le document existe
+			if (userDocSnap.exists()) {
+				const userData = userDocSnap.data();
+				setUserData(userData);
+			} else {
+				// Gère le cas où le document n'existe pas
+				console.error("Document not found");
+			}
+		} catch (error) {
+			console.error("Error fetching user data:", error);
+		}
+	}
 
   if (!userData) {
     // Affiche un indicateur de chargement ou un message d'erreur si nécessaire
     return <div className="text-letter-grey">Loading...</div>;
   }
 
-  const handleImageUpload = () => {
-    if (uploadImage == null) {
-      alert("Please select an image to upload");
-      return;
-    }
-    const imageRef = ref(storage, `images/${uploadImage.name + "_" + userId}`);
-    uploadBytes(imageRef, uploadImage).then(() => {
-      alert("Image uploaded");
-    });
-  };
-  return (
-    <div className="flex flex-col h-screen bg-black-body">
-      {/* Barre de navigation supérieure */}
+	const handleImageUpload = () => {
+		if (uploadImage == null) {
+			alert("Please select an image to upload");
+			return;
+		}
+		const imageRef = ref(storage, `images/${uploadImage.name + "_" + userId}`);
+		uploadBytes(imageRef, uploadImage).then(() => {
+			alert("Image uploaded");
+		});
+	};
+
+	const handleSignout = async () => {
+		try {
+			await signOut(auth); // Use signOut(auth) instead of signOut()
+			localStorage.removeItem("senderID");
+			router.push("/FreelancerSign"); // Replace '/FreelancerSign' with the route you want to navigate to after sign-out
+		} catch (error) {
+			console.error("Error signing out:", error.message);
+			// Handle sign-out error if needed
+		}
+	};
+
+	const handleStatusChange = async () => {
+		try {
+			const docRef = doc(db, "Freelancer", userId);
+			await updateDoc(docRef, {
+				status: !userData.status,
+			});
+
+			// Update local state after changing the status
+			setUserData((prevUserData) => ({
+				...prevUserData,
+				status: !prevUserData.status,
+			}));
+		} catch (error) {
+			console.error("Error updating status:", error);
+			// Handle the error (e.g., display a message to the user)
+		}
+	};
+	return (
+		<div className="flex flex-col h-screen bg-black-body">
+			{/* Barre de navigation supérieure */}
 
       <div className="text-letter-orange">
         <h1>Bienvenue userData.name, </h1>
@@ -130,121 +163,128 @@ const FreelancerProfil = () => {
         </nav>
       </div>
 
-      {/* Contenu principal */}
-      <div className="flex-1 flex flex-wrap">
-        {/* Barre latérale de navigation */}
-        <div
-          className="p-2 bg-black-button w-full md:w-60 flex-col md:flex hidden"
-          id="sideNav"
-        >
-          <nav>
-            <Link href={`/FreelancerMessage/ListMessage/${userId}`}>
-              <div className="flex ml-2 mt-9">
-                <div>
-                  <PiEnvelopeThin className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-                </div>
-                <div>
-                  <ul className="flex items-center space-x-4 text-letter-grey">
-                    {" "}
-                    Message{" "}
-                  </ul>
-                </div>
-              </div>{" "}
-            </Link>
-            <Link href={"/ProfilPro"}>
-              <div className="flex ml-2 mt-9">
-                <div>
-                  <FaMagnifyingGlass className="text-letter-orange mt-1 mr-2" />
-                </div>
-                <div>
-                  <ul className="flex items-center space-x-4 text-letter-grey">
-                    {" "}
-                    Trouver une mission{" "}
-                  </ul>
-                </div>
-              </div>{" "}
-            </Link>
+			{/* Contenu principal */}
+			<div className="flex-1 flex flex-wrap">
+				{/* Barre latérale de navigation */}
+				<div
+					className="p-2 bg-black-button w-full md:w-60 flex-col md:flex hidden"
+					id="sideNav"
+				>
+					<nav>
+						<Link href={`/FreelancerMessage/ListMessage/${userId}`}>
+							<div className="flex ml-2 mt-9">
+								<div>
+									<PiEnvelopeThin className="text-letter-orange mt-1 mr-2 w-5 h-5" />
+								</div>
+								<div>
+									<ul className="flex items-center space-x-4 text-letter-grey">
+										{" "}
+										Message{" "}
+									</ul>
+								</div>
+							</div>{" "}
+						</Link>
+						<Link href={"/ProfilPro"}>
+							<div className="flex ml-2 mt-9">
+								<div>
+									<FaMagnifyingGlass className="text-letter-orange mt-1 mr-2" />
+								</div>
+								<div>
+									<ul className="flex items-center space-x-4 text-letter-grey">
+										{" "}
+										Trouver une mission{" "}
+									</ul>
+								</div>
+							</div>{" "}
+						</Link>
+						<Link href="/ProfilPro">
+							<div className="flex ml-2 mt-9">
+								<div>
+									<PiNewspaperClippingLight className="text-letter-orange mt-1 mr-2" />
+								</div>
+								<div>
+									<ul className="flex items-center space-x-4 text-letter-grey">
+										{" "}
+										Suivre mes candidatures{" "}
+									</ul>
+								</div>
+							</div>{" "}
+						</Link>
+						<div className="flex ml-2 my-10">
+							<button
+								onClick={() => {
+									handleSignout(userId);
+								}}
+							>
+								<div>
+									<RiLogoutCircleRLine className="text-letter-orange mt-1 mr-2" />
+								</div>
 
-            <Link href="/ProfilPro">
-              <div className="flex ml-2 mt-9">
-                <div>
-                  <PiNewspaperClippingLight className="text-letter-orange mt-1 mr-2" />
-                </div>
-                <div>
-                  <ul className="flex items-center space-x-4 text-letter-grey">
-                    {" "}
-                    Suivre mes candidatures{" "}
-                  </ul>
-                </div>
-              </div>{" "}
-            </Link>
+								<div>
+									<ul className="flex items-center space-x-4 text-letter-grey">
+										{" "}
+										Logout{" "}
+									</ul>
+								</div>
+							</button>
+						</div>{" "}
+					</nav>
 
-            <Link href="/ProfilPro">
-              <div className="flex ml-2 my-10">
-                <div>
-                  <RiLogoutCircleRLine className="text-letter-orange mt-1 mr-2" />
-                </div>
+					{/* ... */}
+				</div>
+				<div></div>
+				{/* Zone de contenu principal */}
+				<div className="flex-1 p-4 w-full ">
+					<button
+						onClick={handleImageUpload}
+						style={{
+							backgroundColor: "orange",
+							color: "white",
+							fontWeight: "bold",
+							padding: "0.5rem",
+							borderRadius: "0.2rem",
+						}}
+					>
+						Upload Image
+					</button>
 
-                <div>
-                  <ul className="flex items-center space-x-4 text-letter-grey">
-                    {" "}
-                    Déconnecter{" "}
-                  </ul>
-                </div>
-              </div>{" "}
-            </Link>
-          </nav>
+					<input
+						type="file"
+						onChange={(event) => {
+							setUploadImage(event.target.files[0]);
+						}}
+						style={{ padding: "0.2rem" }}
+					/>
+					{/* Champ de recherche */}
+					<div className="md:relative md:w-1/3 py-15 ">
+						{profileImage != null ? (
+							<img src={profileImage} />
+						) : (
+							<div className="profil rounded-full picture w-40 h-40 bg-letter-orange m-auto  "></div>
+						)}
 
-          {/* ... */}
-        </div>
-        <div></div>
-        {/* Zone de contenu principal */}
-        <div className="flex-1 p-4 w-full ">
-          <button
-            onClick={handleImageUpload}
-            style={{
-              backgroundColor: "orange",
-              color: "white",
-              fontWeight: "bold",
-              padding: "0.5rem",
-              borderRadius: "0.2rem"
-            }}
-          >
-            Upload Image
-          </button>
-          <input
-            type="file"
-            onChange={(event) => {
-              setUploadImage(event.target.files[0]);
-            }}
-            style={{ padding: "0.2rem" }}
-          />
-          {/* Champ de recherche */}
-          <div className="md:relative md:w-1/3 py-15 ">
-            {profileImage != null ? (
-              <img src={profileImage} />
-            ) : (
-              <div className="profil rounded-full picture w-40 h-40 bg-letter-orange m-auto  "></div>
-            )}
-
-            <div className="text-letter-grey text-center text-lg mt-4">
-              <h1>{userData.name}</h1>
-
-              <div className=" mr-8 flex justify-center">
-                {userData.name !== undefined ? (
-                  <div className=" mt-3 w-5 h-5 bg-green rounded-full ">
-                    {" "}
-                    <span className="ml-6 mt-1 "> Disponible</span>{" "}
-                  </div>
-                ) : (
-                  <div className="w-5 h-5 bg-red rounded-full ">
-                    {" "}
-                    non disponible
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+						<div className="text-letter-grey text-center text-lg mt-4">
+							<h1>{userData.name}</h1>
+							<button
+								onClick={handleStatusChange}
+								className="bg-orange text-white font-bold py-1 px-2 rounded-md"
+							>
+								Change Status
+							</button>
+							<div className="mr-8 flex justify-center">
+								{userData.status ? (
+									<div className="mt-3 w-5 h-5 bg-green rounded-full">
+										<span className="ml-6 mt-1">Available</span>
+									</div>
+								) : (
+									<div className="flex items-center">
+										<div className="w-3 h-3 bg-red rounded-full"></div>
+										<span className="ml-2 text-red">Not Available</span>
+									</div>
+								)}
+							</div>
+						</div>
+					</div>
 
           {/* Conteneur de graphiques */}
           <div className=" mt-8 flex flex-col md:flex-row  space-x-0 space-y-2 md:space-x-4 md:space-y-0  ">

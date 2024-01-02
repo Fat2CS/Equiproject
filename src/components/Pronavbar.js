@@ -127,7 +127,7 @@ const Pronavbar = ({login,receiverId}) => {
 								<div>
 									<ul className="flex items-center space-x-4 text-letter-grey">
 										{" "}
-										Déconnecter{" "}
+								        Logout{" "}
 									</ul>
 								</div>
 							</div>

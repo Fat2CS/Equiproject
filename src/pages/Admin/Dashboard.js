@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useEffect, useState } from "react";
-
 import { PiEnvelopeThin } from "react-icons/pi";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { PiNewspaperClippingLight } from "react-icons/pi";
@@ -15,20 +14,35 @@ import {
 	collection,
 	deleteDoc,
 	updateDoc,
-  query,
-  where
+	getDoc,
+	query,
+	where,
 } from "firebase/firestore";
-import { db } from "@/firebase";
-
-const Dashboard = () => {
+import { db, auth } from "@/firebase";
+import { root } from "postcss";
+import { useRouter } from "next/router";
+const Dashboard =  () => {
 	const [listAnnouces, setListAnnouces] = useState([]);
 
 	const [listProfil, setListProfil] = useState([]);
 
 	const [annoucementsCounter, setAnnoucementCounter] = useState(0);
 	const [freelancerCounter, setFreelancerCounter] = useState(0);
+	const router = useRouter();
 
 	useEffect(() => {
+		const authenticate = async () => {
+			let user_token = localStorage.getItem("token");
+			const adminDocRef = doc(db, "Admin", "vdWkeg9vQlg5BITe3598");
+			const docSnapshot = await getDoc(adminDocRef);
+			if (docSnapshot.exists()) {
+				const adminData = docSnapshot.data();
+				adminData.token !== user_token
+					? router.push("/Admin/AdminLogin")
+					: localStorage.removeItem("token");
+			}
+		};
+
 		const fetchData = async () => {
 			try {
 				await fetchAllCounters();
@@ -38,7 +52,7 @@ const Dashboard = () => {
 				console.error("Error fetching freelancer data:", error);
 			}
 		};
-
+		authenticate();
 		fetchData();
 	}, []);
 
@@ -47,14 +61,14 @@ const Dashboard = () => {
 			const querySnapshot = await getDocs(collection(db, "validationCounter"));
 
 			if (!querySnapshot.empty) {
-				const firstDoc = querySnapshot.docs[0]; 
+				const firstDoc = querySnapshot.docs[0];
 
 				if (firstDoc) {
-					const data = firstDoc.data(); 
+					const data = firstDoc.data();
 					console.log(data);
 
-					setAnnoucementCounter(data.annouces); 
-					setFreelancerCounter(data.freelancer); 
+					setAnnoucementCounter(data.annouces);
+					setFreelancerCounter(data.freelancer);
 				}
 			} else {
 				console.error("No documents found in the Counter collection");
@@ -176,7 +190,7 @@ const Dashboard = () => {
 				const { freelancer, annouces } = docSnapshot.data();
 
 				setAnnoucementCounter(annouces);
-				setFreelancerCounter(freelancer); 
+				setFreelancerCounter(freelancer);
 			} else {
 				console.error("No documents found in the validationCounter collection");
 			}
@@ -184,7 +198,6 @@ const Dashboard = () => {
 			console.error("Error updating counters:", error);
 		}
 	};
-
 
 	const handleDisapproveFreelancer = async (userId) => {
 		try {
