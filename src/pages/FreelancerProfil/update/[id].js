@@ -19,7 +19,6 @@ function EditUserInfo() {
 	const router = useRouter();
 	const { id } = router.query;
 	const [userData, setUserData] = useState([]);
-	const [key, setkey] = useState(1);
 	const [workData, setWorkData] = useState({
 		name: "",
 		email: "",
@@ -50,8 +49,7 @@ function EditUserInfo() {
 			}
 		}
 		id && fetchDataFromFirestore();
-		const key = localStorage.getItem("show");
-		setkey(Number(key));
+		
 	}, [id]);
 
 	useEffect(() => {
@@ -130,7 +128,7 @@ function EditUserInfo() {
 										/>
 									</div>
 									<div>
-										<label className="text-letter-grey">Skills</label>
+										<label className="text-letter-grey">Experience</label>
 										<input
 											name="skill"
 											type="text"
@@ -140,12 +138,7 @@ function EditUserInfo() {
 										/>
 									</div>
 									<div className="col-span-2">
-										{key === 1 ? (
-											<label className="text-letter-grey">Description</label>
-										) : (
-											<label className="text-letter-grey">Experience</label>
-										)}
-
+										<label className="text-letter-grey">Description</label>
 										<textarea
 											name="description"
 											value={workData.description}

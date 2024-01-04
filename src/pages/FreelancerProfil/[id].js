@@ -126,7 +126,6 @@ const FreelancerProfil = () => {
 	};
 
 	const handleUpdateClick=(key)=>{
-		localStorage.setItem("show",key)
 		router.push(`/FreelancerProfil/update/${userId}`)
 	}
 	return (
