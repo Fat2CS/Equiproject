@@ -129,39 +129,39 @@ const FreelancerProfil = () => {
 		<div className="flex flex-col h-screen bg-black-body">
 			{/* Barre de navigation supérieure */}
 
-      <div className="text-letter-orange">
-        <h1>Bienvenue userData.name, </h1>
-      </div>
-      <div className="bg-black-buttonshadow w-full p-2  flex items-center justify-between flex-row md:text-base md:hidden">
-        {/* ... */}
-        <nav className="flex items-center space-x-16 justify-around m-auto">
-          {/* <Link href={`/Message/{${id}`}>
+			<div className="text-letter-orange">
+				<h1>Bienvenue userData.name, </h1>
+			</div>
+			<div className="bg-black-buttonshadow w-full p-2  flex items-center justify-between flex-row md:text-base md:hidden">
+				{/* ... */}
+				<nav className="flex items-center space-x-16 justify-around m-auto">
+					{/* <Link href={`/Message/{${id}`}>
             <div className="items-center space-x-4 text-letter-grey">
               <PiEnvelopeThin className="text-letter-orange mt-1 mr-2 w-5 h-5" />
             </div>{" "}
           </Link> */}
-          <Link href="/ProfilPro">
-            <div className=" items-center space-x-4 text-letter-grey">
-              <FaMagnifyingGlass className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-            </div>
-          </Link>
-          <Link href="/ProfilPro">
-            <div className=" items-center space-x-4 text-letter-grey">
-              <PiNewspaperClippingLight className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-            </div>{" "}
-          </Link>
-          <Link href="/ProfilPro">
-            <div className=" items-center space-x-4 text-letter-grey">
-              <BsPersonWorkspace className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-            </div>{" "}
-          </Link>
-          <Link href={"/CreateAnnonce/"}>
-            <div className=" items-center space-x-4 text-letter-grey">
-              <RiLogoutCircleRLine className="text-letter-orange mt-1 mr-2 w-5 h-5" />
-            </div>
-          </Link>
-        </nav>
-      </div>
+					<Link href="/ProfilPro">
+						<div className=" items-center space-x-4 text-letter-grey">
+							<FaMagnifyingGlass className="text-letter-orange mt-1 mr-2 w-5 h-5" />
+						</div>
+					</Link>
+					<Link href="/ProfilPro">
+						<div className=" items-center space-x-4 text-letter-grey">
+							<PiNewspaperClippingLight className="text-letter-orange mt-1 mr-2 w-5 h-5" />
+						</div>{" "}
+					</Link>
+					<Link href="/ProfilPro">
+						<div className=" items-center space-x-4 text-letter-grey">
+							<BsPersonWorkspace className="text-letter-orange mt-1 mr-2 w-5 h-5" />
+						</div>{" "}
+					</Link>
+					<Link href={"/CreateAnnonce/"}>
+						<div className=" items-center space-x-4 text-letter-grey">
+							<RiLogoutCircleRLine className="text-letter-orange mt-1 mr-2 w-5 h-5" />
+						</div>
+					</Link>
+				</nav>
+			</div>
 
 			{/* Contenu principal */}
 			<div className="flex-1 flex flex-wrap">
@@ -286,24 +286,24 @@ const FreelancerProfil = () => {
 						</div>
 					</div>
 
-          {/* Conteneur de graphiques */}
-          <div className=" mt-8 flex flex-col md:flex-row  space-x-0 space-y-2 md:space-x-4 md:space-y-0  ">
-            {/* Premier conteneur - Graphe des utilisateurs */}
-            <div className=" text-letter-grey w-full md:w-1/3 bg-black-button p-4 shadow rounded-lg border border-border-black-button">
-              <div className="textfirstcontainer  mt-3">
-                <h1 className="sm:text-base lg:text:oxl mb-3">
-                  {userData.name}
-                </h1>
+					{/* Conteneur de graphiques */}
+					<div className=" mt-8 flex flex-col md:flex-row  space-x-0 space-y-2 md:space-x-4 md:space-y-0  ">
+						{/* Premier conteneur - Graphe des utilisateurs */}
+						<div className=" text-letter-grey w-full md:w-1/3 bg-black-button p-4 shadow rounded-lg border border-border-black-button">
+							<div className="textfirstcontainer  mt-3">
+								<h1 className="sm:text-base lg:text:oxl mb-3">
+									{userData.name}
+								</h1>
 
 								<h2 className="mb-3">{userData.level}</h2>
 							</div>
 							<span className="mb-3">{userData.description}</span>
 						</div>
 
-            {/* Deuxième conteneur - Graphe des commerces */}
-            <div className="w-full md:w-2/3">
-              <span
-                className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
+						{/* Deuxième conteneur - Graphe des commerces */}
+						<div className="w-full md:w-2/3">
+							<span
+								className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
                     mt-8 mb-4
                     "
 							>
@@ -326,9 +326,9 @@ const FreelancerProfil = () => {
 								<span></span>
 							</div>
 
-              <div className="mt-5">
-                <span
-                  className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
+							<div className="mt-5">
+								<span
+									className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
                      mb-4
                     "
 								>
@@ -339,7 +339,10 @@ const FreelancerProfil = () => {
 
 							<div className="w-full  mt-5  bg-black-button border border-border-black-button p-4 shadow rounded-lg  text-letter-grey overflow-y-auto">
 								<div className="flex justify-end">
-									<FaPencil className="text-letter-orange mt-1 mr-2" />
+									<Link href={`./update/${userId}`}>
+										{" "}
+										<FaPencil className="text-letter-orange mt-1 mr-2" />
+									</Link>
 								</div>
 								<h1>Expériences </h1>
 								<h1>{userData.level}</h1>
@@ -348,64 +351,64 @@ const FreelancerProfil = () => {
 						</div>
 					</div>
 
-          {/* Troisième conteneur - Tableau des autorisations en attente */}
+					{/* Troisième conteneur - Tableau des autorisations en attente */}
 
-          <div className="mt-5">
-            <span
-              className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
+					<div className="mt-5">
+						<span
+							className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
                      mb-4
                     "
-            >
-              {" "}
-              Candidatures
-            </span>
-          </div>
-          <div className=" h-40vh md:flex  md:space-x-10 md:text-center mt-5 bg-black-button border border-border-black-button p-4 shadow rounded-lg text-letter-grey m-auto ">
-            <div className=" sm:text-basemd:mt-5">
-              {" "}
-              <h1>Candidatures </h1>
-              <div className="mt-4">
-                <span> J'ai candidaté pour le poste de groom</span>
-              </div>
-            </div>
+						>
+							{" "}
+							Candidatures
+						</span>
+					</div>
+					<div className=" h-40vh md:flex  md:space-x-10 md:text-center mt-5 bg-black-button border border-border-black-button p-4 shadow rounded-lg text-letter-grey m-auto ">
+						<div className=" sm:text-basemd:mt-5">
+							{" "}
+							<h1>Candidatures </h1>
+							<div className="mt-4">
+								<span> J'ai candidaté pour le poste de groom</span>
+							</div>
+						</div>
 
-            <div className="mt-7">
-              <div className="text-letter-orange mt-2 text-center text-base">
-                <div>
-                  <span className="text-letter-grey">date</span>
-                </div>
-              </div>
-            </div>
+						<div className="mt-7">
+							<div className="text-letter-orange mt-2 text-center text-base">
+								<div>
+									<span className="text-letter-grey">date</span>
+								</div>
+							</div>
+						</div>
 
-            <div className="mt-9">
-              <div>
-                <span className="text-letter-grey">lieu</span>
-              </div>
-            </div>
-          </div>
+						<div className="mt-9">
+							<div>
+								<span className="text-letter-grey">lieu</span>
+							</div>
+						</div>
+					</div>
 
-          {/* Quatrième conteneur - Tableau des transactions */}
-          <div className="mt-5">
-            <span
-              className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
+					{/* Quatrième conteneur - Tableau des transactions */}
+					<div className="mt-5">
+						<span
+							className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
                      mb-4
                     "
-            >
-              {" "}
-              Avis
-            </span>
-          </div>
+						>
+							{" "}
+							Avis
+						</span>
+					</div>
 
-          <div className="mt-8 border border-border-black-button bg-black-button p-4 shadow rounded-lg text-letter-grey">
-            <span>Avis </span>
-            <div>
-              <span>Merci pour ton ravaille groom soigneuse et sérieuse</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+					<div className="mt-8 border border-border-black-button bg-black-button p-4 shadow rounded-lg text-letter-grey">
+						<span>Avis </span>
+						<div>
+							<span>Merci pour ton ravaille groom soigneuse et sérieuse</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default FreelancerProfil;
