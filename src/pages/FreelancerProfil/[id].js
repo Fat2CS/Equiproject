@@ -295,17 +295,9 @@ const FreelancerProfil = () => {
 									{userData.name}
 								</h1>
 
-								<h2 className="mb-3">userData.business</h2>
-								<h2 className="mb-3">userData.postal</h2>
+								<h2 className="mb-3">{userData.level}</h2>
 							</div>
-							<span className="mb-3">Drescription</span>
-							<span>
-								{" "}
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
-								laborum alias, iure, inventore fugit autem dolorum provident
-								nulla voluptatum et corrupti qui magni cum suscipit commodi sit
-								tempora, nobis atque.
-							</span>
+							<span className="mb-3">{userData.description}</span>
 						</div>
 
 						{/* Deuxième conteneur - Graphe des commerces */}
@@ -320,13 +312,17 @@ const FreelancerProfil = () => {
 							</span>
 							<div className=" bg-black-button border border-border-black-button p-4 shadow rounded-lg  text-letter-grey overflow-y-auto relative mt-5">
 								<div className="flex justify-end">
-									<FaPencil className="text-letter-orange mt-1 mr-2" />
+									<Link href={`./update/${userId}`}>
+										{" "}
+										<FaPencil className="text-letter-orange mt-1 mr-2" />
+									</Link>
 								</div>
-								<h1>Description </h1>
-								<h1>userData.description</h1>
-								<span>Décris toi en quelques mots </span>
-								<h1>Expériences </h1>
-								<h1>userData.level</h1>
+								<h1>Email</h1>
+								<h1>{userData.email}</h1>
+								<h1>Description</h1>
+								<h1>{userData.description}</h1>
+								<h1>Level</h1>
+								<h1>{userData.level}</h1>
 								<span></span>
 							</div>
 
@@ -337,7 +333,7 @@ const FreelancerProfil = () => {
                     "
 								>
 									{" "}
-									Éxpériences
+									Experiences
 								</span>
 							</div>
 
@@ -346,8 +342,8 @@ const FreelancerProfil = () => {
 									<FaPencil className="text-letter-orange mt-1 mr-2" />
 								</div>
 								<h1>Expériences </h1>
-								<h1>userData.level</h1>
-								<span>Décris toi en quelques mots </span>
+								<h1>{userData.level}</h1>
+								<span>{userData.skill}</span>
 							</div>
 						</div>
 					</div>
