@@ -122,9 +122,13 @@ const FreelancerProfil = () => {
 			}));
 		} catch (error) {
 			console.error("Error updating status:", error);
-			// Handle the error (e.g., display a message to the user)
 		}
 	};
+
+	const handleUpdateClick=(key)=>{
+		localStorage.setItem("show",key)
+		router.push(`/FreelancerProfil/update/${userId}`)
+	}
 	return (
 		<div className="flex flex-col h-screen bg-black-body">
 			{/* Barre de navigation supérieure */}
@@ -300,7 +304,6 @@ const FreelancerProfil = () => {
 							<span className="mb-3">{userData.description}</span>
 						</div>
 
-						{/* Deuxième conteneur - Graphe des commerces */}
 						<div className="w-full md:w-2/3">
 							<span
 								className=" text-lg font-bold text-letter-grey border-b-2 border-border-black-button
@@ -312,10 +315,15 @@ const FreelancerProfil = () => {
 							</span>
 							<div className=" bg-black-button border border-border-black-button p-4 shadow rounded-lg  text-letter-grey overflow-y-auto relative mt-5">
 								<div className="flex justify-end">
-									<Link href={`./update/${userId}`}>
+									<button
+										style={{ cursor: "pointer" }}
+										onClick={() => {
+											handleUpdateClick(1);
+										}}
+									>
 										{" "}
 										<FaPencil className="text-letter-orange mt-1 mr-2" />
-									</Link>
+									</button>
 								</div>
 								<h1>Email</h1>
 								<h1>{userData.email}</h1>
@@ -339,10 +347,15 @@ const FreelancerProfil = () => {
 
 							<div className="w-full  mt-5  bg-black-button border border-border-black-button p-4 shadow rounded-lg  text-letter-grey overflow-y-auto">
 								<div className="flex justify-end">
-									<Link href={`./update/${userId}`}>
+									<div
+										style={{ cursor: "pointer" }}
+										 onClick={() => {
+											handleUpdateClick(2);
+										}}
+									>
 										{" "}
 										<FaPencil className="text-letter-orange mt-1 mr-2" />
-									</Link>
+									</div>
 								</div>
 								<h1>Expériences </h1>
 								<h1>{userData.level}</h1>

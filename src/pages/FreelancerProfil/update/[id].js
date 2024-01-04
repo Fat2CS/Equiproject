@@ -19,6 +19,7 @@ function EditUserInfo() {
 	const router = useRouter();
 	const { id } = router.query;
 	const [userData, setUserData] = useState([]);
+	const [key, setkey] = useState(1);
 	const [workData, setWorkData] = useState({
 		name: "",
 		email: "",
@@ -49,6 +50,8 @@ function EditUserInfo() {
 			}
 		}
 		id && fetchDataFromFirestore();
+		const key = localStorage.getItem("show");
+		setkey(Number(key));
 	}, [id]);
 
 	useEffect(() => {
@@ -81,7 +84,6 @@ function EditUserInfo() {
 	const workDataInputHandler = (e) => {
 		setWorkData({ ...workData, [e.target.name]: e.target.value });
 	};
-
 	return (
 		<>
 			<div className="flex ">
@@ -138,7 +140,12 @@ function EditUserInfo() {
 										/>
 									</div>
 									<div className="col-span-2">
-										<label className="text-letter-grey">Description</label>
+										{key === 1 ? (
+											<label className="text-letter-grey">Description</label>
+										) : (
+											<label className="text-letter-grey">Experience</label>
+										)}
+
 										<textarea
 											name="description"
 											value={workData.description}
