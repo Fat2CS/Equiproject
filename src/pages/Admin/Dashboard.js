@@ -132,7 +132,8 @@ const Dashboard =  () => {
 		email,
 		level,
 		skill,
-		description
+		description,
+		experience
 	) => {
 		try {
 			await setDoc(doc(db, "Freelancer", userId), {
@@ -142,6 +143,7 @@ const Dashboard =  () => {
 				name: name,
 				skill: skill,
 				description: description,
+				experience:experience,
 				level: level,
 			});
 
@@ -546,7 +548,8 @@ const Dashboard =  () => {
 															data.email,
 															data.level,
 															data.skill,
-															data.description
+															data.description,
+															data.experience
 														);
 													}}
 												>

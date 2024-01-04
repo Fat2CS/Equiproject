@@ -25,6 +25,7 @@ function EditUserInfo() {
 		level: "",
 		skill: "",
 		description: "",
+		experience: "",
 	});
 
 	useEffect(() => {
@@ -128,11 +129,21 @@ function EditUserInfo() {
 										/>
 									</div>
 									<div>
-										<label className="text-letter-grey">Experience</label>
+										<label className="text-letter-grey">Skills</label>
 										<input
 											name="skill"
 											type="text"
 											value={workData.skill}
+											onChange={workDataInputHandler}
+											className="block mt-3 w-full rounded-full border-0 py-2 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button  placeholder-gray-600"
+										/>
+									</div>
+									<div>
+										<label className="text-letter-grey">Experience</label>
+										<input
+											name="experience"
+											type="text"
+											value={workData.experience}
 											onChange={workDataInputHandler}
 											className="block mt-3 w-full rounded-full border-0 py-2 px-4 text-letter-grey  focus:ring-letter-orange-600 focus: bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button  placeholder-gray-600"
 										/>

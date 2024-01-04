@@ -356,7 +356,7 @@ const FreelancerProfil = () => {
 										<FaPencil className="text-letter-orange mt-1 mr-2" />
 									</div>
 								</div>
-								<h1>Expériences </h1>
+								<h1>{userData.experience}</h1>
 								<h1>{userData.level}</h1>
 								<span>{userData.skill}</span>
 							</div>

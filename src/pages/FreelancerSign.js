@@ -21,9 +21,10 @@ export default function FreelancerSign() {
 	const nameRef = useRef();
 	const usernameRef = useRef();
 	const phoneRef = useRef();
-const skillRef = useRef(); // New skill reference
-const levelRef = useRef(); // New skill reference
-const descriptionRef = useRef();
+	const skillRef = useRef(); // New skill reference
+	const levelRef = useRef(); // New skill reference
+	const experineceRef=useRef();
+	const descriptionRef = useRef();
 
 	const handleSignIn = async (e) => {
 		e.preventDefault();
@@ -34,10 +35,10 @@ const descriptionRef = useRef();
 		const name = nameRef.current.value;
 		const username = usernameRef.current.value;
 		const phone = phoneRef.current.value;
-		const skill = skillRef.current.value; // Retrieve skill value
+		const skill = skillRef.current.value;
 		const description = descriptionRef.current.value;
 		const level = levelRef.current.value;
-
+        const experience=experineceRef.current.value;
 		if (password !== confirmPassword) {
 			alert("Les mots de passe ne correspondent pas.");
 			return;
@@ -60,10 +61,11 @@ const descriptionRef = useRef();
 				userId: userId,
 				email: email,
 				type: type,
-        name:name,
-				skill: skill, // Add skill attribute
+				name: name,
+				skill: skill,
 				description: description,
-        level: level,
+				experience:experience,
+				level: level,
 			});
 			localStorage.setItem("senderID", userId);
 			console.log("Document utilisateur créé avec succès.");
@@ -225,6 +227,25 @@ const descriptionRef = useRef();
 								autoComplete="off"
 								required
 								ref={levelRef}
+								className="block w-full rounded-full border py-3.5 px-4 text-letter-grey focus:ring-letter-orange-600 focus:bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button"
+							/>
+						</div>
+					</div>
+					<div>
+						<label
+							htmlFor="skill"
+							className="block text-sm font-medium leading-6 text-letter-grey"
+						>
+							Experince
+						</label>
+						<div className="mt-2">
+							<input
+								id="skill"
+								name="skill"
+								type="text"
+								autoComplete="off"
+								required
+								ref={experineceRef}
 								className="block w-full rounded-full border py-3.5 px-4 text-letter-grey focus:ring-letter-orange-600 focus:bg-black sm:text-sm sm:leading-6 placeholder-letter-black-button"
 							/>
 						</div>
